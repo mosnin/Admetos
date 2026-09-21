@@ -47,3 +47,9 @@ Hades and Scorpio are described as foundational system work, without inventing p
 Inspected OpenAI's Introducing Codex, Introducing o3 and o4-mini, and Scaling storage for one billion users (part one) pages in addition to the index pages. Product visuals illustrate the actual tool; technical illustrations connect to the article subject; stories use people photography. The first generated abstract-gradient images were rejected and excluded from public assets and deployment.
 
 Replacement editorial illustrations in public/editorial are newly generated conceptual diagrams: context (memory archive), authority (permission boundaries), execution (bounded work bays). They share white/black/cobalt architectural linework. They are not product screenshots or recovered brand assets. User acceptance of this replacement set has not been established.
+
+## User reference correction: cinematic realism
+
+The user rejected the diagram set and supplied six cinematic photographic references. Those diagrams are replaced by three generated photographic scenes: illuminated portals in a concrete hall; a suspended practical light above a field; an engineer working on a mechanical horse. All share cool dramatic light and realistic materials. Reference attachments informed the new images rather than being placed directly on the site.
+
+Every inner page now has a full-width media hero, currently using these stills. `content/hero-media.json` accepts the user-supplied video URL when available; no new video was supplied in this turn. The original P Wilms video remains on the home hero. White content surfaces and the supplied gradient TEXT animation remain.

@@ -191,6 +191,14 @@ async function initSwappedContent() {
     update();
   }
 
+  scope.querySelectorAll('[data-page-video]').forEach(video => {
+    const button=video.closest('.media-hero').querySelector('[data-page-video-toggle]');
+    if(reducedMotion)video.pause();
+    const update=()=>{button.textContent=video.paused?'Play video':'Pause video';button.setAttribute('aria-pressed',String(video.paused));};
+    button.addEventListener('click',()=>{if(video.paused)video.play().catch(()=>{});else video.pause();},{signal:controller.signal});
+    video.addEventListener('play',update,{signal:controller.signal});video.addEventListener('pause',update,{signal:controller.signal});update();
+    cleanups.push(()=>video.pause());
+  });
   scope.querySelectorAll('[data-filter-scope]').forEach(group => {
     let category = 'All';
     const search = group.querySelector('[data-search-input]');
