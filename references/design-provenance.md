@@ -59,3 +59,7 @@ Every inner page now has a full-width media hero, currently using these stills. 
 Default appearance changed to dark throughout page, drawer, content, cards, filters, accordions, and motion component tokens. Header/footer use only the existing circularly clipped mark, with no adjacent Admetos wordmark. Original vendor files remain untouched.
 
 The expanded eighteen-image batch was rejected by the user as an unwanted AI-generated direction before deployment. It is excluded from public assets. Imagery remains at the preceding deployed state pending clarification.
+
+## Reference-faithful recreation correction
+
+User requested 1:1 recreation of the six supplied photographic references, rather than new concepts. Generated each reference individually with explicit composition, subject, color, framing, grain and lighting preservation. The resulting six reference-N images replace the prior free interpretations. Frames use contain fitting in heroes and catalog images to preserve subjects. These are generated recreations, not byte-identical copies of the supplied files.
