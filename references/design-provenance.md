@@ -53,3 +53,9 @@ Replacement editorial illustrations in public/editorial are newly generated conc
 The user rejected the diagram set and supplied six cinematic photographic references. Those diagrams are replaced by three generated photographic scenes: illuminated portals in a concrete hall; a suspended practical light above a field; an engineer working on a mechanical horse. All share cool dramatic light and realistic materials. Reference attachments informed the new images rather than being placed directly on the site.
 
 Every inner page now has a full-width media hero, currently using these stills. `content/hero-media.json` accepts the user-supplied video URL when available; no new video was supplied in this turn. The original P Wilms video remains on the home hero. White content surfaces and the supplied gradient TEXT animation remain.
+
+## Dark appearance and mark-only branding
+
+Default appearance changed to dark throughout page, drawer, content, cards, filters, accordions, and motion component tokens. Header/footer use only the existing circularly clipped mark, with no adjacent Admetos wordmark. Original vendor files remain untouched.
+
+The expanded eighteen-image batch was rejected by the user as an unwanted AI-generated direction before deployment. It is excluded from public assets. Imagery remains at the preceding deployed state pending clarification.
