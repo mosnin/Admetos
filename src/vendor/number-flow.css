@@ -1,0 +1,27 @@
+.nf {  
+  display: flex;  
+  align-items: center;  
+  gap: 16px;  
+}
+
+.nf-stat {  
+  display: block;  
+}
+
+.nf-number {  
+  display: inline-block;  
+  font: inherit;  
+  font-variant-numeric: tabular-nums;  
+  line-height: 0.9;  
+  --number-flow-mask-height: 0.12em;  
+  --number-flow-mask-width: 0.18em;  
+}
+
+.nf-progress {  
+  flex-direction: column;  
+  align-items: flex-start;  
+}
+
+.nf-progress input {  
+  width: min(320px, 100%);  
+}

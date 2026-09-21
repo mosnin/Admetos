@@ -1,0 +1,197 @@
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
+import './vendor/hero.scss';
+import './vendor/drawer.css';
+import './vendor/number-flow.css';
+import './vendor/stacked.css';
+import './vendor/aura.css';
+import './vendor/progressive-blur.css';
+import './vendor/button.css';
+import './vendor/swup.css';
+import './vendor/reveal.css';
+import './vendor/accordion.css';
+import './styles/site.css';
+import { cinematicMediaHero } from './vendor/hero.js';
+import { stackedScrollPanels } from './vendor/stacked.js';
+import { initStatisticNumber } from './vendor/number-flow.js';
+import { auraBorder } from './vendor/aura.js';
+import { textReveal06 } from './vendor/reveal.js';
+import { swup } from './vendor/swup.js';
+
+// Site integration only. The supplied animation implementations live in vendor/.
+gsap.registerPlugin(ScrollTrigger);
+const lenis = new Lenis({ autoRaf: false, lerp: 0.12, smoothWheel: true });
+const updateLenis = (time) => lenis.raf(time * 1000);
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(updateLenis);
+gsap.ticker.lagSmoothing(0);
+
+const drawerRoot = document.querySelector('[data-drawer-navigation]');
+const toggle = drawerRoot.querySelector('[data-toggle]');
+const drawer = drawerRoot.querySelector('.drawer');
+const cover = drawerRoot.querySelector('.cover');
+let drawerOpen = false;
+let drawerTimer;
+let drawerFrame;
+let priorFocus;
+function setDrawer(open, restoreFocus = true) {
+  if (open === drawerOpen) return;
+  clearTimeout(drawerTimer);
+  cancelAnimationFrame(drawerFrame);
+  const page = document.querySelector('#swup');
+  drawerOpen = open;
+  toggle.setAttribute('aria-expanded', String(open));
+  toggle.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+  drawer.setAttribute('aria-hidden', String(!open));
+  drawer.inert = !open;
+  page.inert = open;
+  if (open) {
+    priorFocus = document.activeElement;
+    drawerRoot.setAttribute('data-active', '');
+    lenis.stop();
+    drawerFrame = requestAnimationFrame(() => {
+      if (!drawerOpen) return;
+      drawerRoot.setAttribute('data-open', '');
+      drawer.querySelector('a')?.focus({preventScroll:true});
+    });
+  } else {
+    drawerRoot.removeAttribute('data-open');
+    lenis.start();
+    drawerTimer = setTimeout(() => drawerRoot.removeAttribute('data-active'), 510);
+    if (restoreFocus && priorFocus?.isConnected) priorFocus.focus({preventScroll:true});
+  }
+}
+toggle.addEventListener('click', () => setDrawer(!drawerOpen));
+cover.addEventListener('click', () => setDrawer(false));
+drawer.addEventListener('click', event => {
+  // Let delegated navigation and the link default action run before making
+  // the clicked link inert. Internal Swup visits also close in visit:start.
+  if (event.target.closest('a')) setTimeout(() => setDrawer(false, false), 0);
+});
+document.addEventListener('keydown', event => {
+  if (!drawerOpen) return;
+  if (event.key === 'Escape') { event.preventDefault(); setDrawer(false); }
+  if (event.key === 'Tab') {
+    const items = [toggle, ...drawer.querySelectorAll('a[href]')];
+    const current = items.indexOf(document.activeElement);
+    const next = event.shiftKey ? (current - 1 + items.length) % items.length : (current + 1) % items.length;
+    event.preventDefault(); items[next].focus();
+  }
+});
+
+const auraRoot = document.querySelector('[data-aura-border]');
+let aura;
+try {
+  auraBorder(auraRoot);
+  aura = auraRoot.__auraBorder;
+} catch (error) {
+  auraRoot.dataset.state = 'unsupported';
+  console.warn('Contact glow unavailable; navigation remains available.', error);
+}
+// The supplied renderer tracks its own descendant origin marker.
+// Position that marker over the actual clicked contact control.
+document.addEventListener('click', event => {
+  const link = event.target.closest('a[href]');
+  if (!link || new URL(link.href).pathname !== '/contact/') return;
+  const rect = link.getBoundingClientRect();
+  const marker = auraRoot.querySelector('[data-aura-origin]');
+  marker.style.left = `${rect.left + rect.width / 2}px`;
+  marker.style.top = `${rect.top + rect.height / 2}px`;
+}, {capture:true});
+
+let cleanupPage = () => {};
+let generation = 0;
+async function initSwappedContent() {
+  const run = ++generation;
+  await document.fonts.ready;
+  if (run !== generation) return;
+  const scope = document.querySelector('#swup');
+  const cleanups = [];
+  // Keep the gradient phrase intact so the paid sweep paints across real text.
+  // The hero's character splitting remains in place for the rest of the title.
+  const phrase = scope.querySelector('[data-hero-gradient]');
+  const title = phrase?.parentElement;
+  const titleLabel = title?.textContent;
+  phrase?.remove();
+  const hero = cinematicMediaHero(scope, { lenis });
+  if (phrase) {
+    title.append(phrase);
+    title.setAttribute('aria-label', titleLabel);
+  }
+  if (hero) cleanups.push(hero);
+  const loader = scope.querySelector('.hero-section-01 .loader');
+  if (phrase && loader) {
+    phrase.style.visibility = 'hidden';
+    const reveal = () => {
+      if (loader.style.display !== 'none') return;
+      observer.disconnect();
+      phrase.setAttribute('data-reveal-06', '');
+      phrase.style.setProperty('--reveal-resting-color', '#f5f5f5');
+      phrase.style.setProperty('--reveal-delay', '0s');
+      phrase.style.removeProperty('visibility');
+      phrase.classList.add('is-revealed');
+    };
+    const observer = new MutationObserver(reveal);
+    observer.observe(loader, { attributes: true, attributeFilter: ['style'] });
+    reveal();
+    cleanups.push(() => observer.disconnect());
+  }
+
+  cleanups.push(stackedScrollPanels(scope));
+  scope.querySelectorAll('[data-number-flow-stat]').forEach(root => {
+    initStatisticNumber(root);
+    root.closest('.metric').classList.add('number-ready');
+    cleanups.push(() => root.__numberFlowStatisticCleanup?.());
+  });
+  cleanups.push(textReveal06(scope));
+  cleanupPage = () => cleanups.reverse().forEach(cleanup => cleanup?.());
+  scope.querySelectorAll('img').forEach(img => {
+    if (!img.complete) img.addEventListener('load', () => ScrollTrigger.refresh(), {once:true});
+  });
+  lenis.resize();
+  ScrollTrigger.refresh();
+}
+
+let glowTimer;
+let glowFadeTimer;
+function clearContactGlow() {
+  clearTimeout(glowTimer); clearTimeout(glowFadeTimer);
+  aura?.setActive(false);
+  auraRoot.classList.remove('is-visible');
+}
+function showContactGlow() {
+  if (location.pathname !== '/contact/' || !aura) return;
+  clearContactGlow();
+  auraRoot.classList.add('is-visible');
+  aura.setActive(true);
+  glowTimer = setTimeout(() => {
+    aura.setActive(false);
+    glowFadeTimer = setTimeout(() => auraRoot.classList.remove('is-visible'), 200);
+  }, 2500);
+}
+swup.hooks.on('visit:start', () => {
+  if (import.meta.env.DEV) document.querySelectorAll('style[data-vite-dev-id]').forEach(style => style.setAttribute('data-swup-theme', ''));
+  setDrawer(false, false);
+  clearContactGlow();
+});
+swup.hooks.before('content:replace', () => { ++generation; cleanupPage(); });
+swup.hooks.on('content:replace', () => initSwappedContent());
+swup.hooks.on('page:view', () => { lenis.resize(); ScrollTrigger.refresh(); });
+swup.hooks.on('visit:end', () => {
+  showContactGlow();
+  const page = document.querySelector('#swup');
+  page.setAttribute('tabindex', '-1');
+  page.focus({preventScroll:true});
+});
+// Bridge the shared Lenis instance to Swup's native scroll positions.
+swup.hooks.on('content:scroll', () => { lenis.scrollTo(window.scrollY, {immediate:true}); });
+window.addEventListener('pagehide', () => {
+  ++generation; cleanupPage(); clearContactGlow(); aura?.destroy();
+  clearTimeout(drawerTimer);
+  cancelAnimationFrame(drawerFrame);
+  gsap.ticker.remove(updateLenis); lenis.off('scroll', ScrollTrigger.update); lenis.destroy();
+}, {once:true});
+initSwappedContent();
+showContactGlow();

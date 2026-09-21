@@ -1,0 +1,119 @@
+.button-05,  
+.button-05 * {  
+  box-sizing: border-box;  
+}
+
+.button-05 {  
+  --motion-curve: cubic-bezier(0.2, 1, 0.25, 1);  
+  --motion-time: 620ms;  
+  --arrow-lag: 80ms;  
+  --edge-space: 20px;  
+  --arrow-width: 16px;  
+  --arrow-gap: 12px;  
+  --arrow-bleed: 4px;  
+  --copy-travel: calc(var(--arrow-width) + var(--arrow-gap));
+
+  position: relative;  
+  display: inline-flex;  
+  align-items: center;  
+  border-radius: 999px;  
+  corner-shape: superellipse(1.2);  
+  color: #fff;  
+  font-size: 20px;  
+  line-height: 1.5;  
+  text-decoration: none;  
+  -webkit-tap-highlight-color: transparent;  
+}
+
+.button-05 .glass {  
+  position: absolute;  
+  inset: 0;  
+  border-radius: inherit;  
+  corner-shape: inherit;  
+  background-color: hsla(240, 6%, 32%, 0.383);  
+  backdrop-filter: blur(6px);  
+  -webkit-backdrop-filter: blur(6px);  
+  transition:  
+    background-color var(--motion-time) var(--motion-curve),  
+    transform var(--motion-time) var(--motion-curve);  
+}
+
+.button-05 .content {  
+  position: relative;  
+  display: inline-flex;  
+  align-items: center;  
+  overflow: hidden;  
+  padding:  
+    12px  
+    calc(var(--edge-space) + var(--arrow-width) + var(--arrow-gap))  
+    12px var(--edge-space);  
+  transition: transform 210ms var(--motion-curve);  
+}
+
+.button-05 .content::before,  
+.button-05 .content::after {  
+  content: "→";  
+  position: absolute;  
+  top: 50%;  
+  z-index: 1;  
+  width: var(--arrow-width);  
+  text-align: center;  
+  font-size: 20px;  
+  line-height: 1.2;  
+  transform: translate3d(0, -50%, 0);  
+  transition: transform var(--motion-time) var(--motion-curve);  
+}
+
+.button-05 .content::before {  
+  left: var(--edge-space);  
+  transform: translate3d(  
+    calc(-100% - var(--edge-space) - var(--arrow-bleed)),  
+    -50%,  
+    0  
+  );  
+  transition-delay: 0s;  
+}
+
+.button-05 .content::after {  
+  right: var(--edge-space);  
+  transition-delay: var(--arrow-lag);  
+}
+
+.button-05 .copy {  
+  position: relative;  
+  z-index: 1;  
+  line-height: 1.2;  
+  transition: transform var(--motion-time) var(--motion-curve);  
+}
+
+.button-05:hover .glass {  
+  background-color: hsla(240, 25%, 5%, 0.36);  
+  transform: scaleY(0.955);  
+}
+
+.button-05:hover .content::before {  
+  transform: translate3d(0, -50%, 0);  
+  transition-delay: var(--arrow-lag);  
+}
+
+.button-05:hover .content::after {  
+  transform: translate3d(  
+    calc(100% + var(--edge-space)),  
+    -50%,  
+    0  
+  );  
+  transition-delay: 0s;  
+}
+
+.button-05:hover .copy {  
+  transform: translate3d(var(--copy-travel), 0, 0);  
+}
+
+.button-05:active .glass {  
+  transform: scaleY(0.93);  
+  transition: transform 210ms var(--motion-curve);  
+}
+
+.button-05:active .content {  
+  transform: translate3d(2px, 0, 0);  
+}
