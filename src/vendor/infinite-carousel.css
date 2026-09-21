@@ -1,0 +1,159 @@
+.infinite-carousel {
+  --carousel-gap: 20px;
+  --carousel-surface: #efeeec;
+  --carousel-text: #171717;
+  --carousel-muted: #6d6a66;
+
+
+  display: flex;
+  width: 100%;
+  align-items: center;
+  overflow: clip;
+  padding: 24px 0;
+}
+
+
+.infinite-carousel__track {
+  display: flex;
+  width: max-content;
+  gap: var(--carousel-gap);
+  align-items: center;
+  padding-right: 1vw;
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+  will-change: transform;
+}
+
+
+.infinite-carousel__track.is-pressed {
+  cursor: grabbing;
+}
+
+
+.infinite-carousel__track.is-dragging .carousel-card {
+  pointer-events: none;
+}
+
+
+.carousel-card {
+  position: relative;
+  display: flex;
+  width: 26vw;
+  min-width: 220px;
+  height: 540px;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  padding: clamp(20px, 1.9vw, 30px);
+  color: var(--carousel-text);
+  background: var(--carousel-surface);
+  transform-origin: center;
+}
+
+
+.carousel-card:nth-child(even) {
+  background:
+    color-mix(
+      in srgb,
+      var(--carousel-surface) 98%,
+      var(--carousel-text) 2%
+    );
+}
+
+
+.carousel-card h2,
+.carousel-card p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  line-height: 1.2;
+}
+
+
+.carousel-card h2 {
+  font-size: clamp(1.1875rem, 1.55vw, 1.4375rem);
+  font-weight: 500;
+}
+
+
+.carousel-card p {
+  color: var(--carousel-muted);
+  font-size: 1rem;
+}
+
+
+.carousel-card__media {
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  place-items: center;
+}
+
+
+.carousel-card__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 280px;
+  max-height: 280px;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+
+.carousel-card__footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+.carousel-card__plus {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+}
+
+
+.carousel-card__plus-line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 2px;
+  background: var(--carousel-text);
+  transform: translate(-50%, -50%);
+}
+
+
+.carousel-card__plus-line--vertical {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+
+@media (max-width: 1399px) {
+  .carousel-card {
+    width: 32vw;
+  }
+}
+
+
+@media (max-width: 991px) {
+  .carousel-card {
+    width: 42vw;
+    min-width: 280px;
+  }
+}
+
+
+@media (max-width: 767px) {
+  .carousel-card {
+    width: 78vw;
+    height: 440px;
+  }
+}

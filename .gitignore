@@ -50,3 +50,5 @@ next-env.d.ts
 # Local reference library and execution checkpoint
 /references/effects/
 /REBUILD-STATUS.md
+
+references/rejected-images/

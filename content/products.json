@@ -12,7 +12,8 @@
       "Business planning",
       "Processes and daily work"
     ],
-    "source": "https://www.companyos.sh"
+    "source": "https://www.companyos.sh",
+    "visual": "context"
   },
   {
     "slug": "stored",
@@ -28,7 +29,8 @@
       "MCP and API access",
       "Editable shared context"
     ],
-    "source": "https://www.stored.to"
+    "source": "https://www.stored.to",
+    "visual": "context"
   },
   {
     "slug": "govern",
@@ -42,7 +44,8 @@
       "Scoped permissions and approvals",
       "Action receipts"
     ],
-    "source": "https://www.govern.sh"
+    "source": "https://www.govern.sh",
+    "visual": "authority"
   },
   {
     "slug": "cadre",
@@ -57,7 +60,8 @@
       "Model choice",
       "Company OS connection"
     ],
-    "source": "https://www.cadre.to"
+    "source": "https://www.cadre.to",
+    "visual": "execution"
   },
   {
     "slug": "chippi",
@@ -73,7 +77,8 @@
       "Follow-up drafts",
       "Tour coordination"
     ],
-    "source": "https://www.usechippi.com"
+    "source": "https://www.usechippi.com",
+    "visual": "authority"
   },
   {
     "slug": "scalar",
@@ -88,7 +93,8 @@
       "Record enrichment",
       "Relationship workflows"
     ],
-    "source": "https://www.tryscalar.xyz"
+    "source": "https://www.tryscalar.xyz",
+    "visual": "execution"
   },
   {
     "slug": "tellme",
@@ -102,7 +108,8 @@
       "Collected answers",
       "Structured records"
     ],
-    "source": "https://www.tellme.sh"
+    "source": "https://www.tellme.sh",
+    "visual": "context"
   },
   {
     "slug": "operate",
@@ -118,7 +125,8 @@
       "Human-agent coordination",
       "Scoped work and review"
     ],
-    "source": "https://www.operate.to"
+    "source": "https://www.operate.to",
+    "visual": "authority"
   },
   {
     "slug": "marketer",
@@ -133,7 +141,8 @@
       "Review workflows",
       "Connected publishing"
     ],
-    "source": "https://www.marketer.sh"
+    "source": "https://www.marketer.sh",
+    "visual": "execution"
   },
   {
     "slug": "symbolic",
@@ -148,7 +157,8 @@
       "Project gates",
       "Test evidence and review"
     ],
-    "source": "https://www.symbolic.sh"
+    "source": "https://www.symbolic.sh",
+    "visual": "context"
   },
   {
     "slug": "clusters",
@@ -163,6 +173,7 @@
       "Agent capability discovery",
       "Portable installation"
     ],
-    "source": "https://www.clusters.to"
+    "source": "https://www.clusters.to",
+    "visual": "authority"
   }
 ]

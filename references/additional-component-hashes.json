@@ -1,0 +1,26 @@
+{
+  "src/vendor/card-stack.css": {
+    "document": "06-card-stack",
+    "sha256": "9864f2acbfdca48e83fef235bd7be8f89414c1e82e647609d123d5e7311149d6"
+  },
+  "src/vendor/card-stack.js": {
+    "document": "06-card-stack",
+    "sha256": "62622859b4d3ea6d56f0f112c84f7e3fcc1ce8f0dc852d82ce2ce28210dc9fdc"
+  },
+  "src/vendor/infinite-carousel.css": {
+    "document": "09-infinite-courosel",
+    "sha256": "0e5334eb71dbe09a5ebfb997ad91ce419a22c14f4fb5afc0a32c37c5169753ab"
+  },
+  "src/vendor/infinite-carousel.js": {
+    "document": "09-infinite-courosel",
+    "sha256": "eeba271cc260ef78da74866d51bba248e685df1cafe5acf8744b3f4c81409136"
+  },
+  "src/vendor/parallax-carousel.css": {
+    "document": "04-parallax-carousel",
+    "sha256": "7404f16c3dc02f711b612f59df3c8ae35294d878a7c57b0f855d228c60216674"
+  },
+  "src/vendor/parallax-carousel.js": {
+    "document": "04-parallax-carousel",
+    "sha256": "d2cd27504d6f1d5f88f3e4c67136ab1eef611862caecf1b5900c98a9bc8c98e3"
+  }
+}

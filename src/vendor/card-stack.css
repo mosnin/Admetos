@@ -1,0 +1,194 @@
+[data-card-stack] {
+  --card-frame: rgb(15, 15, 15);
+  --caption-muted: rgb(107, 104, 102);
+  --stack-focus: rgb(224, 101, 0);
+  display: flex;
+  width: 100%;
+  min-height: 670px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  overflow: hidden;
+}
+[data-card-stack],
+[data-card-stack] *,
+[data-card-stack] *::before,
+[data-card-stack] *::after {
+  box-sizing: border-box;
+}
+@media (prefers-color-scheme: dark) {
+  [data-card-stack] {
+    --card-frame: rgb(245, 245, 244);
+    --caption-muted: rgb(166, 160, 155);
+    --stack-focus: rgb(242, 85, 0);
+  }
+}
+@media (max-width: 720px) {
+  [data-card-stack] {
+    min-height: 520px;
+    gap: 24px;
+  }
+}
+@media (max-width: 430px) {
+  [data-card-stack] {
+    min-height: 460px;
+    gap: 20px;
+  }
+}
+[data-card-stack][data-dragging=true] .deck {
+  cursor: grabbing;
+}
+[data-card-stack] .deck {
+  position: relative;
+  flex: none;
+  width: 396px;
+  height: 550px;
+  cursor: grab;
+  isolation: isolate;
+  touch-action: none;
+  user-select: none;
+}
+[data-card-stack] .deck:focus-visible {
+  outline: 2px solid var(--stack-focus);
+  outline-offset: 8px;
+  border-radius: 39px;
+  corner-shape: superellipse(2);
+}
+@media (max-width: 720px) {
+  [data-card-stack] .deck {
+    width: 286px;
+    height: 410px;
+  }
+}
+@media (max-width: 430px) {
+  [data-card-stack] .deck {
+    width: 244px;
+    height: 354px;
+  }
+}
+@media (max-width: 350px) {
+  [data-card-stack] .deck {
+    width: 220px;
+    height: 322px;
+  }
+}
+[data-card-stack] .deck .card {
+  --card-padding: 4px;
+  --card-radius: 39px;
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: var(--card-padding);
+  overflow: hidden;
+  background: var(--card-frame);
+  border-radius: var(--card-radius);
+  corner-shape: superellipse(2);
+  transform-origin: center;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+[data-card-stack] .deck .card:not(:first-child) {
+  opacity: 0;
+}
+@media (max-width: 720px) {
+  [data-card-stack] .deck .card {
+    --card-radius: 31.2px;
+  }
+}
+@media (max-width: 430px) {
+  [data-card-stack] .deck .card {
+    --card-radius: 26px;
+  }
+}
+[data-card-stack] .deck .card img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  border-radius: calc(var(--card-radius) - var(--card-padding));
+  corner-shape: inherit;
+  object-fit: cover;
+  object-position: center;
+}
+[data-card-stack] .deck .drag-proxy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+[data-card-stack] .captions {
+  --caption-duration: 560ms;
+  --caption-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  display: grid;
+  flex: none;
+  width: 396px;
+  max-width: calc(100% - 48px);
+  min-height: 64px;
+  align-items: center;
+}
+@media (max-width: 720px) {
+  [data-card-stack] .captions {
+    width: 286px;
+  }
+}
+@media (max-width: 430px) {
+  [data-card-stack] .captions {
+    width: 244px;
+    min-height: 60px;
+  }
+}
+[data-card-stack] .captions .caption {
+  grid-area: 1/1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  filter: blur(4px);
+  transform: translateX(0%) rotate(0deg);
+  transform-origin: 50% 100%;
+  transition: transform var(--caption-duration) var(--caption-ease), opacity var(--caption-duration) var(--caption-ease), filter var(--caption-duration) var(--caption-ease), visibility var(--caption-duration);
+}
+[data-card-stack] .captions .caption[data-caption-state=previous] {
+  transform: translateX(-16%) rotate(-7.5deg);
+}
+[data-card-stack] .captions .caption[data-caption-state=next] {
+  transform: translateX(16%) rotate(7.5deg);
+}
+[data-card-stack] .captions .caption[data-caption-state=active] {
+  opacity: 1;
+  visibility: visible;
+  filter: blur(0px);
+  transform: translateX(0%) rotate(0deg);
+}
+[data-card-stack] .captions .caption h2 {
+  margin: 0;
+  padding: 0;
+  color: inherit;
+  font-size: 22px;
+  line-height: 1.25;
+  text-wrap: balance;
+}
+@media (max-width: 430px) {
+  [data-card-stack] .captions .caption h2 {
+    font-size: 20px;
+  }
+}
+[data-card-stack] .captions .caption p {
+  margin: 0;
+  padding: 0;
+  color: var(--caption-muted);
+  font-size: 16px;
+  line-height: 1.4;
+}
+@media (max-width: 430px) {
+  [data-card-stack] .captions .caption p {
+    font-size: 14px;
+  }
+}

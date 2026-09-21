@@ -19,14 +19,14 @@ Applied these relationships to Admetos: Research, Products, Developers, News, Co
 
 P Wilms source: `../reference/pwilms`, source commit `31d5fbf02e74200b041a081683d5dd1439c14d46`.
 
-- Cinematic hero: original loader panels, progress, SplitText entrance, media scale, section handoff. Uses the existing Admetos logo as its single visual. Light colors change in integration CSS.
+- Cinematic hero: original loader panels, progress, SplitText entrance, media scale, section handoff. Uses the exact P Wilms Pexels video and matching poster as its single visual (video 36244108). Light neutral colors change in integration CSS. The logo remains in the header, footer, and favicon.
 - Navigation drawer: original markup and CSS; the six primary destinations replace labels.
 - Stacked scroll panels: original DOM, CSS, and GSAP initializer; featured Company OS, Stored, Govern content and identity assets.
 - NumberFlow: counts derived from the actual ecosystem, systems, and four focus areas.
 - Gradient text reveal, arrow CTA button, Swup transitions, progressive blur, contact aura: supplied implementations retained.
 - Research accordion: Google Doc `Web Animation Effects`, section 16, uses the supplied CSS and checkbox/label/answer structure.
 
-All source implementations in `src/vendor` remain unchanged. Site integration supports cleanup on route changes, search/category filtering, and reduced motion.
+The original sixteen P Wilms source files remain unchanged. The three additional Google Doc components retain their source implementations with automatic page bootstrapping replaced by named exports for route lifecycle support. Site integration supports cleanup on route changes, search/category filtering, and reduced motion.
 
 ## Content and assets
 
@@ -35,3 +35,15 @@ Recovered Admetos local source: `/Users/preston/Documents/Codex/2026-07-27/realt
 Current ecosystem: Company OS, Stored, Govern, Cadre, Chippi, Scalar, TellMe, Operate, Marketer, Symbolic, Clusters. Product sources are recorded with each entry in `content/products.json`. Current public product identity assets came from those sites. Products without a verified downloadable mark use their written names.
 
 Hades and Scorpio are described as foundational system work, without inventing public release claims. Existing newsroom articles were not recovered; editorial drafts remain unpublished.
+
+## Additional supplied components and editorial correction
+
+- Doc section 06: draggable card stack on Company; source keyboard/drag behavior plus explicit Previous/Next controls.
+- Doc section 09: infinite card carousel on Home and Developers; source motion plus pause, focus pause, and reduced-motion fallback.
+- Doc section 04: Keen parallax carousel on Research; source motion, keyboard interaction, and a skip link.
+- Gradient reveal is exclusively the supplied text animation, now on inner-page titles as well as home.
+- No cream palette or decorative emoji. The hero uses the original P Wilms video.
+
+Inspected OpenAI's Introducing Codex, Introducing o3 and o4-mini, and Scaling storage for one billion users (part one) pages in addition to the index pages. Product visuals illustrate the actual tool; technical illustrations connect to the article subject; stories use people photography. The first generated abstract-gradient images were rejected and excluded from public assets and deployment.
+
+Replacement editorial illustrations in public/editorial are newly generated conceptual diagrams: context (memory archive), authority (permission boundaries), execution (bounded work bays). They share white/black/cobalt architectural linework. They are not product screenshots or recovered brand assets. User acceptance of this replacement set has not been established.
