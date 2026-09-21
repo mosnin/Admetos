@@ -22,7 +22,7 @@ import { swup } from './vendor/swup.js';
 
 // Site integration only. The supplied animation implementations live in vendor/.
 gsap.registerPlugin(ScrollTrigger);
-const lenis = new Lenis({ autoRaf: false, lerp: 0.12, smoothWheel: true });
+const lenis = new Lenis({ autoRaf: false, lerp: 0.12, smoothWheel: !matchMedia('(prefers-reduced-motion: reduce)').matches });
 const updateLenis = (time) => lenis.raf(time * 1000);
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(updateLenis);
@@ -113,22 +113,25 @@ async function initSwappedContent() {
   // The hero's character splitting remains in place for the rest of the title.
   const phrase = scope.querySelector('[data-hero-gradient]');
   const title = phrase?.parentElement;
-  const titleLabel = title?.textContent;
+  const titleLabel = title?.innerText.replace(/\s+/g, ' ').trim();
   phrase?.remove();
-  const hero = cinematicMediaHero(scope, { lenis });
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const heroNav = scope.querySelector('[data-hero-section-01] .content > p');
+  if (heroNav) heroNav.setAttribute('data-hero-nav', '');
+  const hero = reducedMotion ? null : cinematicMediaHero(scope, { lenis });
   if (phrase) {
     title.append(phrase);
     title.setAttribute('aria-label', titleLabel);
   }
   if (hero) cleanups.push(hero);
   const loader = scope.querySelector('.hero-section-01 .loader');
-  if (phrase && loader) {
+  if (phrase && loader && !reducedMotion) {
     phrase.style.visibility = 'hidden';
     const reveal = () => {
       if (loader.style.display !== 'none') return;
       observer.disconnect();
       phrase.setAttribute('data-reveal-06', '');
-      phrase.style.setProperty('--reveal-resting-color', '#f5f5f5');
+      phrase.style.setProperty('--reveal-resting-color', '#161616');
       phrase.style.setProperty('--reveal-delay', '0s');
       phrase.style.removeProperty('visibility');
       phrase.classList.add('is-revealed');
@@ -139,13 +142,42 @@ async function initSwappedContent() {
     cleanups.push(() => observer.disconnect());
   }
 
-  cleanups.push(stackedScrollPanels(scope));
+  if (!reducedMotion) cleanups.push(stackedScrollPanels(scope));
   scope.querySelectorAll('[data-number-flow-stat]').forEach(root => {
     initStatisticNumber(root);
     root.closest('.metric').classList.add('number-ready');
     cleanups.push(() => root.__numberFlowStatisticCleanup?.());
   });
   cleanups.push(textReveal06(scope));
+  const controller = new AbortController();
+  cleanups.push(() => controller.abort());
+  scope.querySelectorAll('[data-filter-scope]').forEach(group => {
+    let category = 'All';
+    const search = group.querySelector('[data-search-input]');
+    const items = [...group.querySelectorAll('[data-category]')];
+    const update = () => {
+      const query = (search?.value || '').trim().toLowerCase();
+      let visible = 0;
+      items.forEach(item => {
+        item.hidden = !(category === 'All' || item.dataset.category === category) || !(item.dataset.search || item.textContent).toLowerCase().includes(query);
+        if (!item.hidden) visible++;
+      });
+      group.querySelector('[data-empty]').hidden = visible > 0;
+      const counter = group.querySelector('[data-result-count]');
+      if (counter) counter.textContent = `${visible} ${visible === 1 ? 'product' : 'products'}`;
+    };
+    group.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
+      category = button.dataset.filter;
+      group.querySelectorAll('[data-filter]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+      update(); lenis.resize(); ScrollTrigger.refresh();
+    }, {signal: controller.signal}));
+    search?.addEventListener('input', update, {signal: controller.signal});
+    update();
+  });
+  document.querySelectorAll('.desktop-nav a').forEach(a => {
+    if(location.pathname.startsWith(new URL(a.href).pathname)) a.setAttribute('aria-current','page');
+    else a.removeAttribute('aria-current');
+  });
   cleanupPage = () => cleanups.reverse().forEach(cleanup => cleanup?.());
   scope.querySelectorAll('img').forEach(img => {
     if (!img.complete) img.addEventListener('load', () => ScrollTrigger.refresh(), {once:true});

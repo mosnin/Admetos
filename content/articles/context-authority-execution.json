@@ -1,0 +1,17 @@
+{
+  "slug": "context-authority-execution",
+  "title": "Context, authority, execution",
+  "category": "Research",
+  "date": "2026-09-21",
+  "author": "Admetos",
+  "status": "draft",
+  "excerpt": "A working framework for useful agent systems.",
+  "sections": [
+    {
+      "heading": "From a run to a system",
+      "paragraphs": [
+        "Our research direction connects memory, permissions, execution, and coordination. This draft is a starting point for a future research note."
+      ]
+    }
+  ]
+}

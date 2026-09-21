@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "hades",
+    "name": "Hades",
+    "role": "Agent execution",
+    "description": "A lightweight runtime for building and running AI agents. The Hades work explores streaming runs, tools, MCP connections, handoffs, cancellation, and policy enforcement inside an existing product.",
+    "capabilities": [
+      "Streaming execution",
+      "Tools and MCP",
+      "Handoffs and cancellation",
+      "Governed authority"
+    ]
+  },
+  {
+    "slug": "scorpio",
+    "name": "Scorpio",
+    "role": "Persistent coordination",
+    "description": "An operating layer for work that continues across many agent runs. The Scorpio work focuses on carrying goals, organizational state, permissions, and resources across ongoing processes.",
+    "capabilities": [
+      "Long-running processes",
+      "Organizational state",
+      "Cross-product coordination",
+      "Policy-aware execution"
+    ]
+  }
+]

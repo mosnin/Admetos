@@ -1,0 +1,32 @@
+{
+  "slug": "building-for-people-and-agents",
+  "title": "Building for people and agents",
+  "category": "Company",
+  "date": "2026-09-21",
+  "author": "Admetos",
+  "status": "draft",
+  "excerpt": "Our approach to an ecosystem of focused products, connected by a shared purpose.",
+  "sections": [
+    {
+      "heading": "A capable model is a beginning",
+      "paragraphs": [
+        "For agents to be useful in a company, they need more than the ability to produce an answer. They need context about the work, a clear account of what they are allowed to do, and a place to carry a task through to completion.",
+        "Admetos builds products around those needs. Our work spans shared memory, agent authority, cloud execution, business workspaces, and applications that bring these capabilities into everyday work."
+      ]
+    },
+    {
+      "heading": "Focused products, shared purpose",
+      "paragraphs": [
+        "Each product has a specific job. Stored makes organizational context available. Govern focuses on identity and permissions. Cadre gives workers a cloud environment. Company OS brings company knowledge and planning into a shared workspace.",
+        "Applications such as Scalar, Chippi, and TellMe bring agent capabilities closer to particular workflows: customer relationships, real estate inquiries, and structured interviews."
+      ]
+    },
+    {
+      "heading": "Useful on their own",
+      "paragraphs": [
+        "The ecosystem is not a requirement to buy an entire stack. We build around distinct customer needs, so a team can begin with the product that fits its work.",
+        "Our shared direction is to make intelligent systems more useful, more understandable, and easier for people to direct. This journal is where we will share the work, the decisions behind it, and updates as the products develop."
+      ]
+    }
+  ]
+}

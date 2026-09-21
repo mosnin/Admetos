@@ -1,84 +1,95 @@
 from pathlib import Path
-import re, html
-root=Path(__file__).resolve().parents[1]
-socials=[('Email','mailto:hello@admetoslabs.com'),('Jefe Prompt','https://jefeprompt.com'),('Glorb','https://glorbai.com')]
-def social_html():
- return ''.join(f'<a href="{u}" target="_blank" rel="noopener noreferrer"><span>{n}</span></a>' for n,u in socials)
-def button(label,href,external=False):
- extra=' target="_blank" rel="noopener noreferrer"' if external else ''
- return f'<a class="button-05" href="{href}"{extra}><span class="glass" aria-hidden="true"></span><span class="content"><span class="copy">{label}</span></span></a>'
-nav=(root/'references/drawer-markup.html').read_text()
-nav=nav[:nav.index('  <div class="page">')]
-nav=nav.replace('<p class="eyebrow">Navigation</p>','<p class="eyebrow">Admetos Labs</p>')
-labels=[('Home','/'),('Mission','/mission/'),('Projects','/projects/'),('Lab','/lab/'),('Contact','/contact/')]
-nav=nav.replace('</ul>', '<li><a href=""><span><!-- Page label --></span></a></li></ul>', 1)
-for label,url in labels:
- nav=nav.replace('<li><a href=""><span><!-- Page label --></span></a></li>',f'<li><a href="{url}"><span>{label}</span></a></li>',1)
-nav=re.sub(r'<div class="socials">.*?</div>',f'<div class="socials">{social_html()}</div>',nav,flags=re.S)
-blur=(root/'references/blur-markup.html').read_text()
-aura='<div class="contact-aura" data-aura-border data-dither-src="https://www.details.so/vault-previews/aurora-glow/_astro/dither.DYfTq7JB.png" data-state="off" data-palette="spectrum" aria-hidden="true"><canvas data-aura-canvas aria-hidden="true"></canvas><span data-aura-origin></span></div>'
-footer='<footer class="site-footer content-width"><span>© 2026 Admetos Labs</span><a href="#top">Back to top</a></footer>'
-brand='<a class="site-brand" href="/" aria-label="Admetos Labs home"><span class="admetos-wordmark">admetos<span>LABS</span></span></a>'
-def shell(title,description,path,body):
- return f'''<!doctype html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark"><title>{title}</title><meta name="description" content="{description}"><link rel="canonical" href="https://admetos.org{path}"><meta property="og:title" content="{title}"><meta property="og:description" content="{description}"><meta property="og:type" content="website"><meta property="og:url" content="https://admetos.org{path}"><meta property="og:image" content="https://admetos.org/admetos-glass.png"><meta property="og:image:width" content="1734"><meta property="og:image:height" content="907"><meta property="og:image:type" content="image/png"><meta property="og:image:alt" content="Admetos mark in glass"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://admetos.org/admetos-glass.png"><meta name="twitter:image:alt" content="Admetos mark in glass"><link rel="icon" href="/favicon.svg"><script type="module" src="/src/main.js"></script></head>
-<body id="top"><a class="skip-link" href="#swup">Skip to content</a>{nav}
-{brand}<div class="page"><div class="page-content"><main class="transition-fade" id="swup">{body}{footer}</main></div>{blur}<button class="cover" type="button" tabindex="-1" aria-label="Close navigation"></button></div></div>{aura}<noscript><style>.hero-section-01 .loader{{display:none}}[data-reveal-06]{{color:#f5f5f5;-webkit-text-fill-color:#f5f5f5;background:none}}[data-drawer-navigation] .toggle{{display:none}}</style><p class="noscript-nav"><a href="/">Home</a> <a href="/contact/">Contact</a></p></noscript></body></html>'''
-metrics=''.join(f'<div class="metric"><dt><span class="stat-fallback">{label}</span><span class="nf nf-stat" data-number-flow-stat data-start="0" data-value="{value}" data-suffix="{suffix}" aria-label="{label}"><number-flow class="nf-number" data-stat-number></number-flow></span></dt><dd>{caption}</dd></div>' for value,suffix,label,caption in [(3,'','3','Projects in the ecosystem'),(4,'','4','Research disciplines'),(1,'','1','Shared mission')])
-story=f'''<section class="story-section content-width" id="story"><div><p class="section-label">Our mission</p><h2>Intelligence.<br><span data-reveal-06 data-resting-color="#f5f5f5">In practice.</span></h2><dl class="metrics">{metrics}</dl></div><div class="story-copy"><p class="lead">Advancing artificial intelligence through research and practical applications.</p><p>We believe the future lies at the intersection of artificial intelligence and decentralized technologies. Our mission is to build the tools, systems, and knowledge that will guide humanity through this transformation.</p><p>Through research, practical applications, and collaborative innovation, we’re building toward a future where artificial intelligence and human intelligence work together.</p><p>From prompt engineering to agentic frameworks, our work explores how intelligent systems can expand what people do.</p><p class="lead">Building tomorrow, today.</p></div></section>'''
-
-stack=(root/'references/stacked-markup.html').read_text()
-stack=stack.replace('<main class="stacked-scroll-preview" data-theme="light">','<div class="stacked-scroll-preview" data-theme="dark" id="work">').replace('</main>','</div>')
-stack=stack.replace('aria-label="Product features"','aria-label="Admetos projects"').replace('<p class="section-cue">Scroll down</p>','<p class="section-cue">What we’re building.</p>')
-projects=[('Jefe Prompt','Prompt engineering','A tool that helps users craft AI prompts for better results. Fast, free, and designed for everyone.','https://jefeprompt.com','Explore Jefe Prompt'),('Glorb','Agentic systems','Our first iteration on an agentic framework and context engine designed to run and automate complex business operations.','https://glorbai.com','Explore Glorb'),('Glorb GPTs','Applied intelligence','A collection of professional prompts and AI agents on the ChatGPT marketplace.','https://gpts.glorbai.com','Explore Glorb GPTs')]
-idx=0
-def panel(m):
- global idx
- name,subtitle,copy,url,cta=projects[idx];idx+=1
- b=m.group(0)
- b=re.sub(r'<h2>.*?</h2>',f'<h2><span>{name}</span></h2><p class="project-category">{subtitle}</p>',b,flags=re.S)
- b=re.sub(r'(<div class="stacked-scroll-panel__description">)\s*<p>.*?</p>',lambda _:f'{_.group(1)}<p>{copy}</p>{button(cta,url,url.startswith("https"))}',b,flags=re.S)
- return b
-stack=re.sub(r'<article class="stacked-scroll-panel">.*?</article>',panel,stack,flags=re.S)
-stack=re.sub(r'<section class="next-section">.*?</section>','',stack,flags=re.S)
-# Keep all three source panels and use the established Admetos glass asset.
-stack=re.sub(r'(<img\s+class="stacked-scroll-panel__image"\s+src=")[^"]+',lambda m:m.group(1)+'/admetos-glass.png',stack)
-stack=re.sub(r'alt="[^"]*"', 'alt="Admetos glass mark"', stack)
-
-hero=(root/'references/hero-markup.html').read_text()
-hero=hero.replace('https://www.details.so/vault-previews/section-04/media/video-mobile.mp4','https://videos.pexels.com/video-files/36244108/15370421_2560_1440_30fps.mp4').replace('https://www.details.so/vault-previews/section-04/media/video.mp4','https://videos.pexels.com/video-files/36244108/15370421_2560_1440_30fps.mp4')
-hero=re.sub(r'<source\s+[^>]*>', '', hero)
-hero=hero.replace('</video>', '<source src="https://videos.pexels.com/video-files/36244108/15370421_2560_1440_30fps.mp4" type="video/mp4"></video>')
-hero=hero.replace('https://www.details.so/vault-previews/section-04/media/poster.webp','https://images.pexels.com/videos/36244108/pexels-photo-36244108.jpeg?auto=compress&amp;w=1260&amp;h=750&amp;dpr=1')
+import html, json, re
+from datetime import datetime, timezone
+from email.utils import format_datetime
+R=Path(__file__).resolve().parents[1]
+e=lambda s:html.escape(str(s),quote=True)
+products=json.loads((R/'content/products.json').read_text()); systems=json.loads((R/'content/systems.json').read_text())
+articles=sorted([json.loads(p.read_text()) for p in (R/'content/articles').glob('*.json') if json.loads(p.read_text()).get('status')=='published'],key=lambda p:p['date'],reverse=True)
+routes=[]
+def link(label,url,cls='text-link'):
+ return f'<a class="{cls}" href="{e(url)}">{e(label)} <span aria-hidden="true">↗</span></a>'
+def button(label,url):
+ return f'<a class="button-05" href="{e(url)}"><span class="glass" aria-hidden="true"></span><span class="content"><span class="copy">{e(label)}</span></span></a>'
+def brand(p):
+ logo=f'<img src="/brand/{e(p["logo"])}" alt="" class="product-logo {"wordmark" if p.get("wordmark") else ""} {p["slug"]}" loading="lazy">' if p.get('logo') else ''
+ return f'<span class="product-identity">{logo}<span>{e(p["name"])}</span></span>'
+def product_card(p):
+ return f'<a class="product-card" href="/products/{p["slug"]}/" data-category="{e(p["category"])}" data-search="{e(p["name"]+" "+p["tagline"])}"><div class="product-card-head">{brand(p)}<span class="arrow" aria-hidden="true">↗</span></div><div><p class="eyebrow">{e(p["category"])}</p><h3>{e(p["tagline"])}</h3></div></a>'
+def article_card(a):
+ return f'<a class="article-card" href="/news/{a["slug"]}/" data-category="{e(a["category"])}"><p class="metadata">{e(a["category"])} <span>{datetime.fromisoformat(a["date"]).strftime("%B %d, %Y")}</span></p><h3>{e(a["title"])}</h3><p>{e(a["excerpt"])}</p></a>'
+def intro(label,title,description='',extra=''):
+ return f'<header class="page-intro"><p class="eyebrow">{label}</p><h1>{title}</h1>{f"<p class=lead>{description}</p>" if description else ""}{extra}</header>'
+footer='<footer class="site-footer"><div class="footer-brand"><a class="brand" href="/"><span>Admetos</span></a><p>Research. Products.<br>Possibility.</p></div><div><h2>Products</h2>'+''.join(f'<a href="/products/{p["slug"]}/">{e(p["name"])}</a>' for p in products)+'</div><div><h2>Research</h2><a href="/research/">Our approach</a><a href="/research/hades/">Hades</a><a href="/research/scorpio/">Scorpio</a><a href="/developers/">Developers</a></div><div><h2>Company</h2><a href="/company/">About</a><a href="/news/">News &amp; insights</a><a href="/careers/">Careers</a><a href="/investors/">Investors</a><a href="/contact/">Contact</a><a href="/feed.xml">RSS</a></div><div class="footer-bottom"><span>© 2026 Admetos</span><a href="#top">Back to top ↑</a></div></footer>'
+drawer=(R/'references/drawer-markup.html').read_text().split('  <div class="page">')[0]
+drawer=re.sub(r'<ul class="links">.*?</ul>', '<ul class="links">'+''.join(f'<li><a href="{url}"><span>{label}</span></a></li>' for label,url in [('Home','/'),('Research','/research/'),('Products','/products/'),('Developers','/developers/'),('News','/news/'),('Company','/company/')])+'</ul>',drawer,flags=re.S)
+drawer=re.sub(r'<div class="socials">.*?</div>','<div class="socials"><a href="/contact/">Contact</a><a href="/careers/">Careers</a><a href="/investors/">Investors</a></div>',drawer,flags=re.S)
+blur=(R/'references/blur-markup.html').read_text()
+aura='<div class="contact-aura" data-aura-border data-dither-src="https://www.details.so/vault-previews/aurora-glow/_astro/dither.DYfTq7JB.png" data-state="off" data-palette="spectrum" aria-hidden="true"><canvas data-aura-canvas></canvas><span data-aura-origin></span></div>'
+brandmark='<img src="/brand/admetos-mark.png" width="40" height="40" alt=""><span>Admetos</span>'
+footer=footer.replace('<span>Admetos</span>',brandmark)
+def write(path,title,description,body,image=None):
+ target=R/(path.strip('/')+'/index.html' if path!='/' else 'index.html');target.parent.mkdir(parents=True,exist_ok=True);routes.append(str(target.relative_to(R)))
+ doc=f'''<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="light"><title>{e(title)} | Admetos</title><meta name="description" content="{e(description)}"><link rel="canonical" href="https://admetos.org{path}"><meta property="og:title" content="{e(title)} | Admetos"><meta property="og:description" content="{e(description)}"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><link rel="icon" href="/brand/admetos-mark.png"><link rel="alternate" type="application/rss+xml" title="Admetos News" href="/feed.xml"><script type="module" src="/src/main.js"></script></head><body id="top"><a class="skip-link" href="#swup">Skip to content</a>{drawer}<header class="site-header"><a class="brand" href="/" aria-label="Admetos home">{brandmark}</a><nav class="desktop-nav" aria-label="Primary navigation"><a href="/research/">Research</a><a href="/products/">Products</a><a href="/developers/">Developers</a><a href="/news/">News</a><a href="/company/">Company</a></nav></header><div class="page"><div class="page-content"><main id="swup" class="transition-fade">{body}{footer}</main></div>{blur}<button class="cover" type="button" tabindex="-1" aria-label="Close navigation"></button></div></div>{aura}<noscript><style>.hero-section-01 .loader{{display:none}}[data-reveal-06]{{color:#161616;-webkit-text-fill-color:#161616;background:none}}</style></noscript></body></html>'''
+ target.write_text('\n'.join(line.rstrip() for line in doc.splitlines())+'\n')
+# Home
+# Source components keep their original DOM hooks. Only content and light-theme tokens change.
+hero=(R/'references/hero-markup.html').read_text()
 hero=hero.replace('<main class="hero-page">','<div class="hero-page">').replace('</main>','</div>')
 hero=re.sub(r'<header>.*?</header>','',hero,flags=re.S)
-hero=re.sub(r'<div class="item">\s*<img.*?</div>', '', hero, flags=re.S)
-hero=re.sub(r'<span class="divider"[^>]*></span>', '', hero)
-# Hidden single-item hook preserves the supplied hero lifecycle without a media selector.
-hero=re.sub(r'<div class="thumbs".*?</div>', '<div class="thumbs" hidden inert aria-hidden="true"><button type="button" tabindex="-1" aria-label="Background video"></button></div>', hero, flags=re.S)
-
-hero=hero.replace('Give your story an unforgettable entrance','Building <br><span data-hero-gradient>tomorrow.<br>Today.</span>')
-hero=re.sub(r'(<div class="content">\s*).*?(<h1>)',r'\1\2',hero,flags=re.S)
-hero=re.sub(r'(<div class="content">.*?<h1>.*?</h1>)\s*<p>.*?</p>',r'\1<p>Admetos Labs. AI research &amp; development. <span>Intelligent systems. Practical innovation.</span></p>',hero,flags=re.S)
-home_intro=f'''<section class="home-intro content-width"><p class="section-label">AI research laboratory</p><h2>Human ambition.<br><span data-reveal-06 data-resting-color="#f5f5f5">Machine intelligence.</span></h2><div class="home-summary"><p class="lead">We build tools, systems, and knowledge at the intersection of artificial intelligence and decentralized technologies.</p><div class="cta-row">{button('Our mission','/mission/')}{button('Explore our projects','/projects/')}{button('Inside the lab','/lab/')}</div></div></section>'''
-
-hero=hero.replace('<!-- Existing or new next-section content -->',home_intro)
-(root/'index.html').write_text(shell('Admetos Labs | AI Research &amp; Development','AI research and development. Intelligent systems and practical innovation.','/',hero))
-contact=f'''<section class="contact-page content-width"><p class="section-label">Collaborate</p><h1>Let’s build<br><span data-reveal-06 data-resting-color="#f5f5f5">what comes next.</span></h1><div class="contact-columns"><div><p class="lead">Have something worth exploring?</p><p>For research, collaborations, and conversations about intelligent systems, get in touch with Admetos Labs.</p><div class="cta-row">{button('hello@admetoslabs.com','mailto:hello@admetoslabs.com')}</div></div><div><p class="lead">From ideas to applications.</p><p>Explore our work in prompt engineering, agentic frameworks, and human–computer interaction.</p>{button('Explore our projects','/projects/')}</div></div><div class="social-row">{social_html()}</div></section>'''
-
-(root/'contact/index.html').write_text(shell('Contact Admetos Labs','Connect with Admetos Labs about research, intelligent systems, and collaboration.','/contact/',contact))
-story=story.replace('<h2>', '<h1>', 1).replace('</h2>', '</h1>', 1)
-ventures_intro='<header class="page-intro content-width"><p class="section-label">Projects</p><h1>What we’re<br><span data-reveal-06 data-resting-color="#f5f5f5">building.</span></h1><p class="lead">Tools and platforms exploring how we interact with artificial intelligence.</p></header>'
-stack=re.sub(r'<div class="scroll-cue">.*?</div>', '', stack, flags=re.S)
-areas=[('Neural architecture','Advanced AI system design and optimization.'),('Prompt engineering','Optimized AI interactions and response quality.'),('Agent systems','Autonomous AI workflows and multi-agent coordination.'),('Web3 integration','Decentralized AI and blockchain convergence.')]
-research='<section class="accordion" aria-labelledby="accordion-title"><h2 id="accordion-title" class="sr-only">Research disciplines</h2>'+''.join(f'<article class="item"><input class="toggle" type="checkbox" id="research-{i}"/><label class="question" for="research-{i}"><span>{title}</span><span class="icon" aria-hidden="true"><span class="icon-mark"></span></span></label><div class="answer"><div class="answer-inner"><p>{copy}</p></div></div></article>' for i,(title,copy) in enumerate(areas))+'</section>'
-
-writing_page=f'''<section class="editorial-page content-width"><p class="section-label">The lab</p><h1>Ideas into<br><span data-reveal-06 data-resting-color="#f5f5f5">intelligence.</span></h1><p class="lead">Our lab combines theoretical research with practical applications, exploring artificial intelligence and human–computer interaction.</p><div class="research-disciplines">{research}</div><div class="cta-row">{button('Collaborate with us','/contact/')}</div></section>'''
-
-for slug,title,description,body in [
- ('mission','Mission | Admetos Labs','The mission behind Admetos Labs.',story+'<section class="page-next content-width">'+button('Explore our projects','/projects/')+'</section>'),
- ('projects','Projects | Admetos Labs','Jefe Prompt, Glorb, and Glorb GPTs.',ventures_intro+stack),
- ('lab','Lab | Admetos Labs','Research disciplines at Admetos Labs.',writing_page)]:
- (root/slug).mkdir(exist_ok=True)
- (root/slug/'index.html').write_text(shell(title,description,f'/{slug}/',body))
-print('Generated Home, Mission, Projects, Lab, and Contact pages.')
+hero=re.sub(r'<div class="media".*?</div>\s*</div>\s*<div class="content">','<div class="media" aria-hidden="true"><div class="item active"><img src="/brand/admetos-mark.png" alt=""></div></div><div class="content">',hero,flags=re.S)
+hero=re.sub(r'<div class="thumbs".*?</div>','<div class="thumbs" hidden inert aria-hidden="true"><button tabindex="-1" aria-label="Admetos logo"></button></div>',hero,flags=re.S)
+hero=hero.replace('Give your story an unforgettable entrance','Building<br><span data-hero-gradient>tomorrow.<br>Today.</span>')
+hero=re.sub(r'(<div class="content">.*?<h1>.*?</h1>)\s*<p>.*?</p>',r'\1<p>Admetos. AI research &amp; development. <span>Intelligent systems. Practical innovation.</span></p>',hero,flags=re.S)
+metrics=''.join(f'<div class="metric"><dt><span class="stat-fallback">{value}</span><span class="nf nf-stat" data-number-flow-stat data-start="0" data-value="{value}" aria-label="{value}"><number-flow class="nf-number" data-stat-number></number-flow></span></dt><dd>{label}</dd></div>' for value,label in [(len(products),'Products in the ecosystem'),(len(systems),'Foundational systems'),(4,'Areas of focus')])
+home_intro='<section class="section split"><div><p class="eyebrow">AI research laboratory</p><h2>Human ambition.<br><span data-reveal-06 data-resting-color="#161616">Machine intelligence.</span></h2><dl class="metrics">'+metrics+'</dl></div><div class="story-copy"><p class="lead">Admetos builds and operates focused technology companies for AI agents, the people who direct them, and the businesses that rely on them.</p><p>Each product serves a clear customer need. Shared engineering and operating support connect the ecosystem.</p><div class="actions">'+button('Explore our products','/products/')+button('About Admetos','/company/')+'</div></div></section>'
+panel_template=re.search(r'<article class="stacked-scroll-panel">.*?</article>',(R/'references/stacked-markup.html').read_text(),re.S).group()
+stack_panels=[]
+for product in [next(p for p in products if p['slug']==slug) for slug in ['company-os','stored','govern']]:
+ panel=re.sub(r'<h2>.*?</h2>','<h2><span>'+product['name']+'</span></h2><p class="project-category">'+product['category']+'</p>',panel_template,flags=re.S)
+ panel=re.sub(r'(<div class="stacked-scroll-panel__description">)\s*<p>.*?</p>',lambda m:m[1]+'<p>'+product['description']+'</p>'+button('Explore '+product['name'],'/products/'+product['slug']+'/'),panel,flags=re.S)
+ panel=re.sub(r'<img\s+.*?/>',lambda m:brand(product),panel,flags=re.S)
+ stack_panels.append(panel)
+stack='<div class="stacked-scroll-preview" data-theme="light"><section class="stacked-scroll-panels" data-stacked-scroll-panels aria-label="Featured Admetos products">'+''.join(stack_panels)+'</section></div>'
+rest='<section class="section"><div class="section-heading"><h2>The ecosystem.</h2>'+link('All products','/products/')+'</div><div class="product-grid">'+''.join(product_card(p) for p in products)+'</div></section><section class="section split"><p class="eyebrow">Research</p><div><h2>Context. Authority.<br>Execution. Coordination.</h2><p class="lead">We study the foundations that turn intelligence into dependable work.</p><div class="actions">'+button('Inside the lab','/research/')+'</div></div></section><section class="section"><div class="section-heading"><h2>From the lab.</h2>'+link('News & insights','/news/')+'</div><div class="news-home">'+''.join(article_card(a) for a in articles)+'<div class="journal-note"><p class="eyebrow">News & insights</p><p>Articles, product updates, research notes, and ideas from across Admetos.</p>'+link('Follow via RSS','/feed.xml')+'</div></div></section>'
+home=hero.replace('<!-- Existing or new next-section content -->',home_intro+stack+rest)
+write('/','Research & Products', 'Admetos is an independent technology lab building software for people, AI agents, and the companies they run together.', home)
+filters='<div class="filters" role="group" aria-label="Filter products">'+''.join(f'<button data-filter="{x}" aria-pressed="{"true" if x=="All" else "false"}">{x}</button>' for x in ['All','Workspaces','Infrastructure','Applications'])+'</div>'
+productbody=intro('Products','The Admetos ecosystem.','Independent products. A shared ambition to expand what people and agents can do.')+'<section class="section catalog" data-filter-scope><div class="catalog-controls">'+filters+'<label class="search-label">Find a product<input type="search" placeholder="Search products" data-search-input></label></div><p class="result-count" aria-live="polite" data-result-count>11 products</p><div class="product-grid">'+''.join(product_card(p) for p in products)+'</div><p class="empty-state" data-empty hidden>No products match. Try another search or category.</p></section><section class="section statement"><h2>Start with what you need.</h2><p>Each product has its own purpose. Explore its site for current features, availability, and access. Adopting the entire ecosystem is never the starting requirement.</p></section>'
+write('/products/','Products','Explore Stored, Govern, Cadre, Company OS, Chippi, Scalar, TellMe, Operate, Marketer, Symbolic, and Clusters.',productbody)
+for p in products:
+ visual=f'<div class="product-brand-stage">{brand(p)}</div>'
+ body=intro(p['category'],p['name'],p['tagline'],f'<div class="actions">{button("Visit "+p["name"],p["url"])}{link("All products","/products/")}</div>')+f'<section class="product-detail section">{visual}<div><p class="eyebrow">About {e(p["name"])}</p><h2>{e(p["tagline"])}</h2><p class="lead">{e(p["description"])}</p><ul class="capabilities">'+''.join(f'<li>{e(x)}</li>' for x in p['capabilities'])+'</ul></div></section><section class="section related"><div class="section-heading"><h2>Explore the ecosystem</h2>'+link('All products','/products/')+'</div><div class="product-grid">'+''.join(product_card(x) for x in products if x['slug']!=p['slug'])[:0]+'</div></section>'
+ # Related products are chosen from the same category, falling back to the ecosystem.
+ related=[x for x in products if x['slug']!=p['slug'] and x['category']==p['category']][:3]
+ body=body.replace('<div class="product-grid"></div>','<div class="product-grid">'+''.join(product_card(x) for x in related)+'</div>')
+ write('/products/'+p['slug']+'/',p['name'],p['description'],body)
+focus=[('Context','Make knowledge available across tools and sessions.','Stored'),('Authority','Define what an agent can do, and keep a record of its actions.','Govern'),('Execution','Give agents a reliable place to use tools and complete work.','Hades · Cadre'),('Coordination','Carry goals and state across teams, products, and time.','Company OS · Operate · Scorpio')]
+research=intro('Research','Intelligence needs<br>an environment.','Our work explores the infrastructure around AI: how agents remember, act, coordinate, and remain accountable.')+'<section class="section research-disciplines"><h2>Areas of focus</h2><div class="accordion">'+''.join(f'<article class="item"><input class="toggle" type="checkbox" id="focus-{i}"><label class="question" for="focus-{i}"><span>{n}</span><span class="icon" aria-hidden="true"><span class="icon-mark"></span></span></label><div class="answer"><div class="answer-inner"><p>{d}</p><p>{p}</p></div></div></article>' for i,(n,d,p) in enumerate(focus))+'</div></section><section class="section"><div class="section-heading"><h2>Foundational systems</h2><p>Foundational work from the Admetos lab.</p></div><div class="system-grid">'+''.join(f'<a class="system-card" href="/research/{s["slug"]}/"><p class="eyebrow">{s["role"]}</p><h3>{s["name"]} ↗</h3><p>{s["description"]}</p></a>' for s in systems)+'</div></section>'
+write('/research/','Research', 'Explore Admetos research in context, authority, execution, and coordination for AI agents.',research)
+for s in systems:
+ body=intro('Research / '+s['role'],s['name'],s['description'])+f'<section class="section reading"><p class="eyebrow">Areas of work</p><h2>{s["role"]}</h2><ul class="capabilities">'+''.join(f'<li>{e(x)}</li>' for x in s['capabilities'])+'</ul><p>Explore the research direction and contact Admetos to discuss the work. This page describes the system’s focus; it is not a claim of a public product release.</p>'+link('Research inquiries','mailto:hello@admetos.org?subject=Research%20inquiry')+'</section>'
+ write('/research/'+s['slug']+'/',s['name'],s['description'],body)
+company=intro('Company','A lab for what<br>comes next.','Admetos builds and operates focused technology companies for AI agents, the people who direct them, and the businesses that rely on them.')+'<section class="section split"><p class="eyebrow">Our purpose</p><div><h2>Make intelligence<br>useful in the world.</h2><p class="lead">A capable model is only the beginning. Agents need memory, permissions, reliable execution, and a way to coordinate work over time. We build the products around those needs.</p></div></section><section class="section focus-grid">'+''.join(f'<article><span class="index">0{i+1}</span><h3>{n}</h3><p>{d}</p></article>' for i,(n,d) in enumerate([('Start with a real problem','Every product begins with a clear customer need.'),('Keep products independent','A customer can use one product without adopting the full ecosystem.'),('Build for lasting value','Reliability, clear authority, and thoughtful design are part of the work.')]))+'</section><section class="section split"><p class="eyebrow">How we operate</p><div><h2>Focused companies.<br>Shared foundations.</h2><p class="lead">Admetos provides shared engineering, operating support, and direction. Each product keeps its own purpose and customers.</p><div class="actions">'+link('Careers','/careers/')+link('Investor information','/investors/')+'</div></div></section>'
+write('/company/','Company','Meet Admetos: independent research and focused products for people and AI agents.',company)
+developers=intro('Developers','Build with the ecosystem.','Choose the product that fits your work, then use its own documentation to connect your tools and agents.')+'<section class="section"><div class="focus-grid"><article><p class="eyebrow">Context</p><h2>Stored</h2><p>Connect shared organizational memory through MCP or API.</p>'+link('Explore Stored','https://www.stored.to')+'</article><article><p class="eyebrow">Authority</p><h2>Govern</h2><p>Add identity, permissions, and action records to agent workflows.</p>'+link('Explore Govern','https://www.govern.sh')+'</article><article><p class="eyebrow">Capabilities</p><h2>Clusters</h2><p>Discover skills, agents, tools, prompts, and loops.</p>'+link('Explore Clusters','https://www.clusters.to')+'</article></div></section><section class="section statement"><h2>Work with the lab.</h2><p>For questions about the ecosystem, system architecture, or collaboration, get in touch.</p>'+button('Contact Admetos','/contact/')+'</section>'
+write('/developers/','Developers','Find Admetos products for shared context, agent authority, capabilities, and execution.',developers)
+news=intro('News & insights','From the lab.','Articles, product updates, research notes, and ideas from across Admetos.')+'<section class="section" data-filter-scope><div class="filters" role="group" aria-label="Filter news">'+''.join(f'<button data-filter="{c}" aria-pressed="{"true" if c=="All" else "false"}">{c}</button>' for c in ['All','Company','Research','Product updates','Engineering'])+'</div><div class="news-grid">'+''.join(article_card(a) for a in articles)+'</div><p class="empty-state" data-empty>No articles in this category yet. Explore all articles or follow the RSS feed for future updates.</p><div class="section-end">'+link('Follow via RSS','/feed.xml')+'</div></section>'
+write('/news/','News & insights','Articles, updates, and research notes from Admetos.',news)
+for a in articles:
+ date=datetime.fromisoformat(a['date']).strftime('%B %d, %Y')
+ body=f'<article class="editorial"><header><a class="eyebrow" href="/news/">News / {e(a["category"])}</a><h1>{e(a["title"])}</h1><p class="lead">{e(a["excerpt"])}</p><p class="metadata">{date} <span>By {e(a["author"])}</span></p></header><div class="article-body">'+''.join(f'<section><h2>{e(s["heading"])}</h2>'+''.join(f'<p>{e(p)}</p>' for p in s['paragraphs'])+'</section>' for s in a['sections'])+'</div><div class="article-end">'+link('Back to news','/news/')+'</div></article>'
+ write('/news/'+a['slug']+'/',a['title'],a['excerpt'],body)
+careers=intro('Careers','Build something<br>worth working on.','We value clear thinking, thoughtful execution, and products that help people do more.')+'<section class="section reading"><h2>Areas of work</h2><p>Applied systems, product engineering, infrastructure and security, design, and company building.</p><p>There are no open roles listed here yet. You can still introduce yourself and share what you want to build.</p>'+button('Introduce yourself','mailto:hello@admetos.org?subject=Careers%20at%20Admetos')+'</section>'
+write('/careers/','Careers','Explore work at Admetos in applied systems, engineering, design, and company building.',careers)
+investors=intro('Investors','A long view<br>of intelligent systems.','Admetos builds focused software companies around the infrastructure and applications agents need.')+'<section class="section reading"><h2>Independent products.<br>Shared operating support.</h2><p>Our approach combines focused customer needs with shared engineering and company-building resources. We care about useful products, dependable systems, and lasting value.</p><p>For information about the company and its operating model, contact Admetos directly.</p>'+button('Investor inquiries','mailto:hello@admetos.org?subject=Investor%20inquiry')+'</section>'
+write('/investors/','Investors','The strategy and operating model behind the Admetos ecosystem.',investors)
+contact=intro('Contact','Let’s work on<br>what comes next.','For research, product, partnership, or company inquiries, contact Admetos.')+'<section class="section contact-grid"><div><p class="eyebrow">Get in touch</p><h2><a href="mailto:hello@admetos.org">hello@admetos.org ↗</a></h2></div><div><p class="eyebrow">Explore</p>'+link('Products','/products/')+link('Careers','/careers/')+link('Investors','/investors/')+'</div></section>'
+write('/contact/','Contact','Get in touch with Admetos.',contact)
+# Keep previously published routes useful; canonical redirects configured at the host.
+for path,title,body in [('/projects/','Products',productbody),('/portfolio/','Products',productbody),('/lab/','Research',research),('/mission/','Company',company),('/systems/','Research',research)]:write(path,title,title+' at Admetos.',body)
+(R/'content/routes.json').write_text(json.dumps(routes,indent=2))
+(R/'public/sitemap.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>https://admetos.org/'+p.replace('index.html','')+'</loc></url>' for p in routes)+'</urlset>')
+(R/'public/robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: https://admetos.org/sitemap.xml\n')
+(R/'public/feed.xml').write_text('<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Admetos News</title><link>https://admetos.org/news/</link><description>Articles and updates from Admetos.</description>'+''.join(f'<item><title>{e(a["title"])}</title><link>https://admetos.org/news/{a["slug"]}/</link><guid>https://admetos.org/news/{a["slug"]}/</guid><description>{e(a["excerpt"])}</description><pubDate>{format_datetime(datetime.fromisoformat(a["date"]).replace(tzinfo=timezone.utc))}</pubDate></item>' for a in articles)+'</channel></rss>')
+print(f'Generated {len(routes)} pages, {len(products)} products, {len(articles)} published articles. Drafts excluded.')

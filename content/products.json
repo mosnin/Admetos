@@ -1,0 +1,168 @@
+[
+  {
+    "slug": "company-os",
+    "name": "Company OS",
+    "category": "Workspaces",
+    "url": "https://www.companyos.sh",
+    "logo": "companyos.png",
+    "tagline": "A shared workspace for your team and AI.",
+    "description": "Keep business plans, customer knowledge, processes, and daily work together. Company OS gives people and AI tools a shared place to work from current company context.",
+    "capabilities": [
+      "Company context",
+      "Business planning",
+      "Processes and daily work"
+    ],
+    "source": "https://www.companyos.sh"
+  },
+  {
+    "slug": "stored",
+    "name": "Stored",
+    "category": "Infrastructure",
+    "url": "https://www.stored.to",
+    "logo": "stored.png",
+    "wordmark": true,
+    "tagline": "Shared memory for agents and teams.",
+    "description": "Keep what your agents learn in one cloud memory your organization can use. Stored makes knowledge available across tools through MCP and API, with context people can inspect and edit.",
+    "capabilities": [
+      "Organizational memory",
+      "MCP and API access",
+      "Editable shared context"
+    ],
+    "source": "https://www.stored.to"
+  },
+  {
+    "slug": "govern",
+    "name": "Govern",
+    "category": "Infrastructure",
+    "url": "https://www.govern.sh",
+    "tagline": "Identity and authority for agents that act.",
+    "description": "Give agents a defined identity, scoped permissions, and an action record. Govern brings policy, approvals, and auditability to the systems where agents work.",
+    "capabilities": [
+      "Agent identity",
+      "Scoped permissions and approvals",
+      "Action receipts"
+    ],
+    "source": "https://www.govern.sh"
+  },
+  {
+    "slug": "cadre",
+    "name": "Cadre",
+    "category": "Workspaces",
+    "url": "https://www.cadre.to",
+    "logo": "cadre.png",
+    "tagline": "An on-demand workforce in the cloud.",
+    "description": "Run AI workers in cloud environments, choose models through OpenRouter, and connect their work to Company OS. Cadre provides a place for agents to carry out the work you direct.",
+    "capabilities": [
+      "Cloud workers",
+      "Model choice",
+      "Company OS connection"
+    ],
+    "source": "https://www.cadre.to"
+  },
+  {
+    "slug": "chippi",
+    "name": "Chippi",
+    "category": "Applications",
+    "url": "https://www.usechippi.com",
+    "logo": "chippi.png",
+    "wordmark": true,
+    "tagline": "From first inquiry to booked tour.",
+    "description": "Chippi helps real estate teams read inquiries, prioritize leads, prepare follow-ups, and coordinate tours. People stay in control of what gets sent and can review what changed.",
+    "capabilities": [
+      "Lead qualification",
+      "Follow-up drafts",
+      "Tour coordination"
+    ],
+    "source": "https://www.usechippi.com"
+  },
+  {
+    "slug": "scalar",
+    "name": "Scalar",
+    "category": "Applications",
+    "url": "https://www.tryscalar.xyz",
+    "logo": "scalar.png",
+    "tagline": "The CRM your agents run.",
+    "description": "Let agents discover leads, enrich records, and manage relationship workflows while your team directs the work. Scalar gives agent activity a structured home in your customer database.",
+    "capabilities": [
+      "Lead discovery",
+      "Record enrichment",
+      "Relationship workflows"
+    ],
+    "source": "https://www.tryscalar.xyz"
+  },
+  {
+    "slug": "tellme",
+    "name": "TellMe",
+    "category": "Applications",
+    "url": "https://www.tellme.sh",
+    "tagline": "Conversations into structured knowledge.",
+    "description": "TellMe interviews people and turns their answers into a complete, structured record. It connects the nuance of a conversation with information a team can use.",
+    "capabilities": [
+      "Guided interviews",
+      "Collected answers",
+      "Structured records"
+    ],
+    "source": "https://www.tellme.sh"
+  },
+  {
+    "slug": "operate",
+    "name": "Operate",
+    "category": "Workspaces",
+    "url": "https://www.operate.to",
+    "logo": "operate.svg",
+    "wordmark": true,
+    "tagline": "A place for agents to finish their work.",
+    "description": "Give people and agents the project, its history, and its boundaries in one workspace. Operate keeps tasks and decisions visible as work moves from assignment to review.",
+    "capabilities": [
+      "Shared project context",
+      "Human-agent coordination",
+      "Scoped work and review"
+    ],
+    "source": "https://www.operate.to"
+  },
+  {
+    "slug": "marketer",
+    "name": "Marketer",
+    "category": "Applications",
+    "url": "https://www.marketer.sh",
+    "logo": "marketer.png",
+    "tagline": "Create, review, and publish your marketing.",
+    "description": "Turn a product brief into videos, search-focused articles, and advertising drafts. Review the content and publish to connected channels from one workflow.",
+    "capabilities": [
+      "Content creation",
+      "Review workflows",
+      "Connected publishing"
+    ],
+    "source": "https://www.marketer.sh"
+  },
+  {
+    "slug": "symbolic",
+    "name": "Symbolic",
+    "category": "Workspaces",
+    "url": "https://www.symbolic.sh",
+    "logo": "symbolic.png",
+    "tagline": "Direct coding agents from brief to release.",
+    "description": "Keep requirements, design instructions, project gates, and test evidence together. Symbolic helps teams direct coding agents and review what is ready to move forward.",
+    "capabilities": [
+      "Requirements and design context",
+      "Project gates",
+      "Test evidence and review"
+    ],
+    "source": "https://www.symbolic.sh"
+  },
+  {
+    "slug": "clusters",
+    "name": "Clusters",
+    "category": "Infrastructure",
+    "url": "https://www.clusters.to",
+    "logo": "clusters.svg",
+    "tagline": "Discover what your agents can do next.",
+    "description": "A marketplace for skills, agents, prompts, tools, and loops. Discover and install reusable capabilities across agent platforms.",
+    "capabilities": [
+      "Skills and tools",
+      "Agent capability discovery",
+      "Portable installation"
+    ],
+    "source": "https://www.clusters.to"
+  }
+]

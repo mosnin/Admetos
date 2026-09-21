@@ -1,10 +1,9 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'node:path';
+import { readFileSync } from 'node:fs';
+const routes = JSON.parse(readFileSync(new URL('./content/routes.json', import.meta.url), 'utf8'));
 export default defineConfig({
   appType: 'mpa',
-  server: { host: '0.0.0.0', allowedHosts: ['terminal.local'] },
-  build: {
-    outDir: 'dist',
-    rollupOptions: { input: { home: resolve(import.meta.dirname,'index.html'), story: resolve(import.meta.dirname,'mission/index.html'), ventures: resolve(import.meta.dirname,'projects/index.html'), writing: resolve(import.meta.dirname,'lab/index.html'), contact: resolve(import.meta.dirname,'contact/index.html') } },
-  },
+  server: { host: '127.0.0.1' },
+  build: { outDir: 'dist', rollupOptions: { input: Object.fromEntries(routes.map((route: string, i: number) => [`page${i}`, resolve(import.meta.dirname, route)])) } }
 });
