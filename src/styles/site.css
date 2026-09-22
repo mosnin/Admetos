@@ -164,8 +164,10 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline-color:#fff}.sea
 
 @media(prefers-reduced-motion:reduce){[data-reveal-06]{color:#f2f4f6!important;-webkit-text-fill-color:#f2f4f6!important}}
 
-/* Preserve reference compositions instead of cropping their subjects away. */
-.page-hero-media img{object-fit:contain;object-position:right center;background:#090c10}.product-card-image img,.carousel-card__media img,.image-band>img{object-fit:contain;object-position:center!important;background:#090c10}
+/* Photographs fill their editorial frames; full-width figures keep their own ratio. */
+.page-hero-media img{object-fit:cover;object-position:center;background:#090c10}
+.product-card-image img,.carousel-card__media img{object-fit:cover;object-position:center;background:#090c10}
+.image-band>img{height:auto;object-fit:initial}
 
 /* Additional paid Google Doc components: theme tokens only; source motion retained. */
 .button-01.ghost{color:inherit;gap:0;text-decoration:none}
@@ -184,3 +186,93 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline-color:#fff}.sea
 .contact-actions{padding-top:0;min-height:230px}
 .page-hero-copy:has([data-menu-01]){overflow:visible}
 @media(prefers-reduced-motion:reduce){[data-reveal-05]{visibility:visible}.button-01 span,.button-04 span,.button-04::before,.button-04::after{transition:none}.menu-demo .menu-panel>*{animation:none!important}}
+
+/* Shared layout contract for every generated route. Keep source effects scoped. */
+:root{--page-gutter:clamp(24px,6vw,96px);--section-space:clamp(56px,6vw,88px)}
+.section{padding-block:var(--section-space)}
+.section>*{min-width:0}
+.section+.section{padding-top:0}
+.section h2{font-size:clamp(34px,4.2vw,64px);line-height:1.1;text-wrap:balance}
+.section-heading{gap:28px;margin-bottom:32px;align-items:center}
+.section-heading .text-link{flex-shrink:0}
+.split{gap:clamp(32px,6vw,80px)}
+.story-copy{padding-top:0}
+.metrics{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:40px;gap:16px}
+.metric dt{font-size:clamp(38px,4vw,56px)}
+.metric dd{font-size:13px}
+.page-intro.media-hero{min-height:clamp(480px,72svh,700px);padding:156px var(--page-gutter) 56px}
+.media-hero h1{font-size:clamp(48px,6.2vw,88px);line-height:1.04;max-width:15ch;text-wrap:balance}
+.media-hero .lead{font-size:clamp(18px,1.8vw,23px);max-width:56ch;margin-top:24px}
+.media-hero .eyebrow{margin-bottom:20px}
+.page-hero-copy{width:100%}
+.product-grid{gap:40px 28px;align-items:start}
+.product-card{min-width:0;min-height:0;gap:18px}
+.product-card-image{aspect-ratio:3/2}
+.product-card-image img{max-width:none}
+.product-card:nth-child(3n+2) .product-card-image img{object-position:center}
+.product-card h3{font-size:22px;line-height:1.35}
+.product-brand-stage{padding:0;min-height:0}
+.product-detail-art{aspect-ratio:3/2;width:100%;height:auto;object-fit:cover}
+.brand-caption{padding:24px}
+.product-detail{align-items:start}
+.carousel-section{width:100%;min-width:0;max-width:100%;padding-block:0 32px}
+.carousel-section>.section-heading{width:100%;padding-top:24px;margin-bottom:20px}
+.carousel-card{height:auto;min-height:420px;gap:24px;width:clamp(280px,28vw,400px);padding:24px}
+.carousel-card__media{flex:none;aspect-ratio:3/2;width:100%}
+.carousel-card__media img{max-width:none;max-height:none}
+.carousel-card__footer{min-height:92px;justify-content:space-between}
+.hero-page .carousel-tools button{border:1px solid #46515d;border-radius:24px;padding:9px 15px}
+.carousel-intro{padding-bottom:0}
+[data-parallax-carousel]{min-height:0;padding-block:32px 12px;align-items:flex-start}
+[data-parallax-carousel]>.card .caption .title{color:var(--ink);font-size:18px;line-height:1.4}
+[data-parallax-carousel]>.card .caption{gap:6px;padding-top:16px}
+[data-parallax-carousel]>.card .frame .media img{opacity:1}
+.company-foundations{gap:48px;align-items:center}
+[data-card-stack]{min-height:0;padding:24px 0;gap:24px;overflow:visible}
+[data-card-stack] .deck{width:min(320px,80%);height:auto;aspect-ratio:396/550}
+[data-card-stack] .captions{width:320px;max-width:100%;min-height:88px}
+.stack-controls{flex-wrap:wrap}
+.focus-grid{gap:32px}
+.focus-grid h2{font-size:clamp(30px,3vw,44px)}
+.index{margin-bottom:24px}
+.reading .button-04,.statement .button-04{margin-top:28px}
+.news-grid:empty{display:none}
+.empty-state{padding-block:40px}
+.contact-grid{padding-bottom:32px}
+.contact-actions{padding-top:0;min-height:0;padding-bottom:72px}
+.site-footer{border-top:1px solid #30363d;padding-top:56px;gap:32px}
+.site-footer .footer-bottom{padding-top:24px}
+[data-reveal-05]{visibility:visible}
+[data-reveal-06]{background-position:0 0;background-image:linear-gradient(90deg,var(--reveal-resting-color) 0%,var(--reveal-resting-color) 33.33%,var(--reveal-color-1) 40%,var(--reveal-color-2) 45%,var(--reveal-color-3) 50%,var(--reveal-color-4) 55%,var(--reveal-color-5) 60%,var(--reveal-resting-color) 66.67%,var(--reveal-resting-color) 100%)}
+.skip-link{color:#fff}
+@media(max-width:1000px){
+ .product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .split,.product-detail{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .focus-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ .page-intro.media-hero{min-height:0;padding:136px 24px 48px}
+ .media-hero h1{font-size:clamp(40px,10vw,58px);max-width:100%;overflow-wrap:anywhere}
+ .media-hero .lead{font-size:18px}
+ .media-hero:after{background:linear-gradient(90deg,#000b,#0006),linear-gradient(0deg,#0008,transparent)}
+ .page-hero-media img{object-position:60% center}
+ .section-heading{align-items:flex-start;gap:20px}
+ .section h2,.section-heading h2{font-size:clamp(32px,8.8vw,42px)}
+ .split,.product-detail,.focus-grid,.product-grid,.system-grid{grid-template-columns:minmax(0,1fr)}
+ .metrics{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .product-card-image{aspect-ratio:3/2}
+ .carousel-card{width:78vw;min-height:390px;padding:20px}
+ .carousel-card__footer{min-height:84px}
+ .carousel-intro{padding-bottom:0}
+ [data-parallax-carousel]{padding-top:24px}
+ [data-card-stack] .deck{width:min(260px,80%)}
+ .company-foundations{gap:24px}
+ .focus-grid{gap:32px}
+ .focus-grid article+article{border-top:1px solid #30363d;padding-top:28px}
+ .contact-grid h2{font-size:clamp(23px,6.4vw,34px);overflow-wrap:anywhere}
+ .site-footer{padding-top:40px;gap:32px 24px}
+ .site-footer .footer-brand{grid-column:1/-1}
+ .site-footer .footer-bottom{gap:24px}
+ .stacked-scroll-panel__content{gap:24px}
+ .actions{gap:16px}
+}
