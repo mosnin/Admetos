@@ -12,20 +12,8 @@ import './vendor/button.css';
 import './vendor/swup.css';
 import './vendor/reveal.css';
 import './vendor/accordion.css';
-import './vendor/card-stack.css';
-import './vendor/infinite-carousel.css';
-import './vendor/parallax-carousel.css';
-import './vendor/color-fill-button.css';
-import './vendor/slide-text-button.css';
-import './vendor/scramble-text.css';
-import './vendor/liquid-popover.css';
 import './styles/site.css';
-import { button01 } from './vendor/slide-text-button.js';
-import { textReveal05 } from './vendor/scramble-text.js';
-import { menu01 } from './vendor/liquid-popover.js';
-import { draggableCardStack } from './vendor/card-stack.js';
-import { infiniteCardCarousel } from './vendor/infinite-carousel.js';
-import { parallaxCarousel } from './vendor/parallax-carousel.js';
+import './styles/admetos.css';
 import { cinematicMediaHero } from './vendor/hero.js';
 import { stackedScrollPanels } from './vendor/stacked.js';
 import { initStatisticNumber } from './vendor/number-flow.js';
@@ -35,7 +23,8 @@ import { swup } from './vendor/swup.js';
 
 // Site integration only. The supplied animation implementations live in vendor/.
 gsap.registerPlugin(ScrollTrigger);
-const lenis = new Lenis({ autoRaf: false, lerp: 0.12, smoothWheel: !matchMedia('(prefers-reduced-motion: reduce)').matches });
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const lenis = new Lenis({ autoRaf: false, lerp: 0.12, smoothWheel: !reducedMotion });
 const updateLenis = (time) => lenis.raf(time * 1000);
 lenis.on('scroll', ScrollTrigger.update);
 gsap.ticker.add(updateLenis);
@@ -126,13 +115,10 @@ async function initSwappedContent() {
   // The hero's character splitting remains in place for the rest of the title.
   const phrase = scope.querySelector('[data-hero-gradient]');
   const title = phrase?.parentElement;
-  const titleLabel = title?.innerText.replace(/\s+/g, ' ').trim();
+  const titleLabel = title?.textContent;
   phrase?.remove();
-  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const heroNav = scope.querySelector('[data-hero-section-01] .content > p');
-  if (heroNav) heroNav.setAttribute('data-hero-nav', '');
-  if (reducedMotion) scope.querySelectorAll('[data-hero-section-01] video').forEach(video => { video.pause(); video.removeAttribute('autoplay'); });
   const hero = reducedMotion ? null : cinematicMediaHero(scope, { lenis });
+  if (reducedMotion) scope.querySelectorAll('video').forEach(video => { video.pause(); video.removeAttribute('autoplay'); });
   if (phrase) {
     title.append(phrase);
     title.setAttribute('aria-label', titleLabel);
@@ -145,7 +131,7 @@ async function initSwappedContent() {
       if (loader.style.display !== 'none') return;
       observer.disconnect();
       phrase.setAttribute('data-reveal-06', '');
-      phrase.style.setProperty('--reveal-resting-color', '#fff');
+      phrase.style.setProperty('--reveal-resting-color', '#f5f5f5');
       phrase.style.setProperty('--reveal-delay', '0s');
       phrase.style.removeProperty('visibility');
       phrase.classList.add('is-revealed');
@@ -163,91 +149,6 @@ async function initSwappedContent() {
     cleanups.push(() => root.__numberFlowStatisticCleanup?.());
   });
   cleanups.push(textReveal06(scope));
-  button01(scope);
-  if (!reducedMotion) {
-    const contexts = [];
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        observer.unobserve(entry.target);
-        contexts.push(gsap.context(() => textReveal05({querySelectorAll: () => [entry.target]}), entry.target));
-      });
-    }, {threshold: 0.2});
-    scope.querySelectorAll('[data-reveal-05]').forEach(el => observer.observe(el));
-    cleanups.push(() => { observer.disconnect(); contexts.forEach(context => context.revert()); });
-  }
-  menu01(scope);
-  scope.querySelectorAll('[data-menu-01]').forEach(root => cleanups.push(() => root.menu01Cleanup?.()));
-  const controller = new AbortController();
-  cleanups.push(() => controller.abort());
-  draggableCardStack(scope);
-  if (!reducedMotion) { infiniteCardCarousel(scope); parallaxCarousel(scope); }
-  scope.querySelectorAll('[data-card-stack]').forEach(root => cleanups.push(() => root.draggableCardStackCleanup?.()));
-  scope.querySelectorAll('[data-parallax-carousel]').forEach(root => cleanups.push(() => root.parallaxCarouselCleanup?.()));
-  scope.querySelectorAll('[data-stack-step]').forEach(button => button.addEventListener('click', () => {
-    button.closest('.stack-showcase').querySelector('[data-stack-deck]').dispatchEvent(new KeyboardEvent('keydown', {key: Number(button.dataset.stackStep) > 0 ? 'ArrowRight' : 'ArrowLeft', bubbles:true}));
-  }, {signal:controller.signal}));
-  scope.querySelectorAll('[data-card-carousel]').forEach(root => {
-    const button=root.closest('.carousel-section').querySelector('[data-carousel-pause]');
-    let paused=reducedMotion;
-    const apply=() => {
-      root.classList.toggle('is-paused',paused);
-      button.setAttribute('aria-pressed',String(paused));
-      button.textContent=paused?'Play motion':'Pause motion';
-      if(paused) root.infiniteCardCarouselCleanup?.();
-      else infiniteCardCarousel(root.parentElement);
-    };
-    apply();
-    button.addEventListener('click',()=>{paused=!paused;apply();},{signal:controller.signal});
-    root.addEventListener('focusin',()=>{if(!paused){paused=true;apply();}},{signal:controller.signal});
-    root.addEventListener('click',event=>{if(root.querySelector('.is-dragging'))event.preventDefault();},{signal:controller.signal,capture:true});
-    cleanups.push(()=>root.infiniteCardCarouselCleanup?.());
-  });
-  const heroVideo=scope.querySelector('[data-hero-section-01] video');
-  const videoButton=scope.querySelector('[data-video-toggle]');
-  if(heroVideo && videoButton){
-    let userPaused=reducedMotion;
-    const update=()=>{videoButton.textContent=userPaused?'Play video':'Pause video';videoButton.setAttribute('aria-pressed',String(userPaused));};
-    heroVideo.addEventListener('play',()=>{if(userPaused)heroVideo.pause();},{signal:controller.signal});
-    videoButton.addEventListener('click',()=>{userPaused=!userPaused;if(userPaused)heroVideo.pause();else heroVideo.play().catch(()=>{});update();},{signal:controller.signal});
-    update();
-  }
-
-  scope.querySelectorAll('[data-page-video]').forEach(video => {
-    const button=video.closest('.media-hero').querySelector('[data-page-video-toggle]');
-    if(reducedMotion)video.pause();
-    const update=()=>{button.textContent=video.paused?'Play video':'Pause video';button.setAttribute('aria-pressed',String(video.paused));};
-    button.addEventListener('click',()=>{if(video.paused)video.play().catch(()=>{});else video.pause();},{signal:controller.signal});
-    video.addEventListener('play',update,{signal:controller.signal});video.addEventListener('pause',update,{signal:controller.signal});update();
-    cleanups.push(()=>video.pause());
-  });
-  scope.querySelectorAll('[data-filter-scope]').forEach(group => {
-    let category = 'All';
-    const search = group.querySelector('[data-search-input]');
-    const items = [...group.querySelectorAll('[data-category]')];
-    const update = () => {
-      const query = (search?.value || '').trim().toLowerCase();
-      let visible = 0;
-      items.forEach(item => {
-        item.hidden = !(category === 'All' || item.dataset.category === category) || !(item.dataset.search || item.textContent).toLowerCase().includes(query);
-        if (!item.hidden) visible++;
-      });
-      group.querySelector('[data-empty]').hidden = visible > 0;
-      const counter = group.querySelector('[data-result-count]');
-      if (counter) counter.textContent = `${visible} ${visible === 1 ? 'product' : 'products'}`;
-    };
-    group.querySelectorAll('[data-filter]').forEach(button => button.addEventListener('click', () => {
-      category = button.dataset.filter;
-      group.querySelectorAll('[data-filter]').forEach(item => item.setAttribute('aria-pressed', String(item === button)));
-      update(); lenis.resize(); ScrollTrigger.refresh();
-    }, {signal: controller.signal}));
-    search?.addEventListener('input', update, {signal: controller.signal});
-    update();
-  });
-  document.querySelectorAll('.desktop-nav a').forEach(a => {
-    if(location.pathname.startsWith(new URL(a.href).pathname)) a.setAttribute('aria-current','page');
-    else a.removeAttribute('aria-current');
-  });
   cleanupPage = () => cleanups.reverse().forEach(cleanup => cleanup?.());
   scope.querySelectorAll('img').forEach(img => {
     if (!img.complete) img.addEventListener('load', () => ScrollTrigger.refresh(), {once:true});

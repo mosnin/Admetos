@@ -1,5 +1,6 @@
 [
   "index.html",
+  "company/index.html",
   "products/index.html",
   "products/company-os/index.html",
   "products/stored/index.html",
@@ -15,7 +16,6 @@
   "research/index.html",
   "research/hades/index.html",
   "research/scorpio/index.html",
-  "company/index.html",
   "developers/index.html",
   "news/index.html",
   "careers/index.html",
