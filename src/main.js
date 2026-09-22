@@ -15,7 +15,14 @@ import './vendor/accordion.css';
 import './vendor/card-stack.css';
 import './vendor/infinite-carousel.css';
 import './vendor/parallax-carousel.css';
+import './vendor/color-fill-button.css';
+import './vendor/slide-text-button.css';
+import './vendor/scramble-text.css';
+import './vendor/liquid-popover.css';
 import './styles/site.css';
+import { button01 } from './vendor/slide-text-button.js';
+import { textReveal05 } from './vendor/scramble-text.js';
+import { menu01 } from './vendor/liquid-popover.js';
 import { draggableCardStack } from './vendor/card-stack.js';
 import { infiniteCardCarousel } from './vendor/infinite-carousel.js';
 import { parallaxCarousel } from './vendor/parallax-carousel.js';
@@ -156,6 +163,21 @@ async function initSwappedContent() {
     cleanups.push(() => root.__numberFlowStatisticCleanup?.());
   });
   cleanups.push(textReveal06(scope));
+  button01(scope);
+  if (!reducedMotion) {
+    const contexts = [];
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        contexts.push(gsap.context(() => textReveal05({querySelectorAll: () => [entry.target]}), entry.target));
+      });
+    }, {threshold: 0.2});
+    scope.querySelectorAll('[data-reveal-05]').forEach(el => observer.observe(el));
+    cleanups.push(() => { observer.disconnect(); contexts.forEach(context => context.revert()); });
+  }
+  menu01(scope);
+  scope.querySelectorAll('[data-menu-01]').forEach(root => cleanups.push(() => root.menu01Cleanup?.()));
   const controller = new AbortController();
   cleanups.push(() => controller.abort());
   draggableCardStack(scope);

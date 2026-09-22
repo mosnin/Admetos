@@ -1,0 +1,45 @@
+.button-01 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(276, 65%, 11%);
+}
+.button-01 .word-space {
+    flex-shrink: 0;
+    white-space: pre;
+}
+.button-01 .span-wrapper {
+    overflow: hidden;
+    white-space: nowrap;
+}
+.button-01 span {
+    display: inline-block;
+    position: relative;
+    text-shadow: 0 2em 0 currentColor;
+    transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.button-01:not(.ghost) {
+    color: hsl(275, 100%, 99%);
+    position: relative;
+    padding: 10px 28px;
+    transition: scale 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: 1;
+}
+.button-01:not(.ghost)::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 4px;
+    background-color: hsl(276, 65%, 11%);
+    transition: scale 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    z-index: -1;
+}
+.button-01:not(.ghost):active {
+    scale: 0.98;
+}
+.button-01:hover .span-text {
+    transform: translateY(-2em);
+}
+.button-01:hover::after {
+    scale: 0.97;
+}

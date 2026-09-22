@@ -63,3 +63,10 @@ The expanded eighteen-image batch was rejected by the user as an unwanted AI-gen
 ## Reference-faithful recreation correction
 
 User requested 1:1 recreation of the six supplied photographic references, rather than new concepts. Generated each reference individually with explicit composition, subject, color, framing, grain and lighting preservation. The resulting six reference-N images replace the prior free interpretations. Frames use contain fitting in heroes and catalog images to preserve subjects. These are generated recreations, not byte-identical copies of the supplied files.
+
+
+## Additional supplied components and original photographic scenes
+
+Added exact source blocks from Web Animation Effects sections 26 (Liquid Popover), 38 (Scramble Text Reveal), 41 (Color Fill Button), and 49 (Slide Text Button). Liquid menus expose existing product/developer/contact destinations and contact inquiry routes; primary actions use color fill, secondary links use sliding text, short section labels use scramble. Existing gradient headlines remain. CSS source preserved with separate dark theme overrides. Liquid geometry/spring code preserved; abortable listeners and frame cleanup adapt it to Swup. Link closure defers until navigation dispatch. Scramble uses its load mode, initialized by IntersectionObserver, with GSAP context cleanup; reduced-motion and no-JS labels remain legible.
+
+The prior six near-recreations were rejected by the user and removed from public assets. Six new generated scenes use each reference only for photographic treatment. New scenes depict hanging textile screens, a seated figure beside blue light, a circular diffusion frame beside water, hanging cords, a technician with a mechanical bird, and a figure trailing fabric over gravel. They change the subjects and composition while retaining low-key practical lighting and grain. These are generated originals, not the supplied reference files. User visual acceptance remains unconfirmed.

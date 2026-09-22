@@ -22,5 +22,40 @@
   "src/vendor/parallax-carousel.js": {
     "document": "04-parallax-carousel",
     "sha256": "d2cd27504d6f1d5f88f3e4c67136ab1eef611862caecf1b5900c98a9bc8c98e3"
+  },
+  "src/vendor/color-fill-button.css": {
+    "document": "41-color-fill-button.md",
+    "sha256": "36273f84fe173f49c5196b40b311597c841958d12df4c01761c1593a0cc1520d",
+    "sourceBlockSha256": "36273f84fe173f49c5196b40b311597c841958d12df4c01761c1593a0cc1520d"
+  },
+  "src/vendor/slide-text-button.css": {
+    "document": "49-slide-text-button.md",
+    "sha256": "65becba214bdd666751c21675a297a0394edc5e4eef0b233f6038c59f1a092dd",
+    "sourceBlockSha256": "65becba214bdd666751c21675a297a0394edc5e4eef0b233f6038c59f1a092dd"
+  },
+  "src/vendor/slide-text-button.js": {
+    "document": "49-slide-text-button.md",
+    "sha256": "fdd79522a61150eaebb451ea9763e8f67add71df375b61ca67abda4e8cef410b",
+    "sourceBlockSha256": "16dfe3cffce6caf0f7ca4a4a68ba8027086d4d602763cb07e90c2571880b575a"
+  },
+  "src/vendor/scramble-text.css": {
+    "document": "38-scramble-text-reveal.md",
+    "sha256": "c681e0bb6cf8219602b30361280a03a7d8c0284adcd5203d9c93703ef2566a9a",
+    "sourceBlockSha256": "c681e0bb6cf8219602b30361280a03a7d8c0284adcd5203d9c93703ef2566a9a"
+  },
+  "src/vendor/scramble-text.js": {
+    "document": "38-scramble-text-reveal.md",
+    "sha256": "ec8fb9e87fcbc2521bbff7685b73beb11a8323bfef1fe1673f5fe22b09c458d6",
+    "sourceBlockSha256": "ec8fb9e87fcbc2521bbff7685b73beb11a8323bfef1fe1673f5fe22b09c458d6"
+  },
+  "src/vendor/liquid-popover.css": {
+    "document": "26-liquid-popover.md",
+    "sha256": "29ec188f00362e812afcf57c16ebdb52f276fa93f997e888169c4afa68ddd577",
+    "sourceBlockSha256": "29ec188f00362e812afcf57c16ebdb52f276fa93f997e888169c4afa68ddd577"
+  },
+  "src/vendor/liquid-popover.js": {
+    "document": "26-liquid-popover.md",
+    "sha256": "594ccc3b1406a08a90d7738fcd662b4cf0d2ffbf944b58de4c78cfb8a9021769",
+    "sourceBlockSha256": "97b27e1661255e0100eac9e9465babf716295dd89268f54c903db464a0fd4317"
   }
 }

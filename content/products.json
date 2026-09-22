@@ -13,7 +13,7 @@
       "Processes and daily work"
     ],
     "source": "https://www.companyos.sh",
-    "visual": "reference-2"
+    "visual": "scene-2"
   },
   {
     "slug": "stored",
@@ -30,7 +30,7 @@
       "Editable shared context"
     ],
     "source": "https://www.stored.to",
-    "visual": "reference-1"
+    "visual": "scene-1"
   },
   {
     "slug": "govern",
@@ -45,7 +45,7 @@
       "Action receipts"
     ],
     "source": "https://www.govern.sh",
-    "visual": "reference-4"
+    "visual": "scene-4"
   },
   {
     "slug": "cadre",
@@ -61,7 +61,7 @@
       "Company OS connection"
     ],
     "source": "https://www.cadre.to",
-    "visual": "reference-5"
+    "visual": "scene-5"
   },
   {
     "slug": "chippi",
@@ -78,7 +78,7 @@
       "Tour coordination"
     ],
     "source": "https://www.usechippi.com",
-    "visual": "reference-6"
+    "visual": "scene-6"
   },
   {
     "slug": "scalar",
@@ -94,7 +94,7 @@
       "Relationship workflows"
     ],
     "source": "https://www.tryscalar.xyz",
-    "visual": "reference-3"
+    "visual": "scene-3"
   },
   {
     "slug": "tellme",
@@ -109,7 +109,7 @@
       "Structured records"
     ],
     "source": "https://www.tellme.sh",
-    "visual": "reference-2"
+    "visual": "scene-2"
   },
   {
     "slug": "operate",
@@ -126,7 +126,7 @@
       "Scoped work and review"
     ],
     "source": "https://www.operate.to",
-    "visual": "reference-4"
+    "visual": "scene-4"
   },
   {
     "slug": "marketer",
@@ -142,7 +142,7 @@
       "Connected publishing"
     ],
     "source": "https://www.marketer.sh",
-    "visual": "reference-3"
+    "visual": "scene-3"
   },
   {
     "slug": "symbolic",
@@ -158,7 +158,7 @@
       "Test evidence and review"
     ],
     "source": "https://www.symbolic.sh",
-    "visual": "reference-5"
+    "visual": "scene-5"
   },
   {
     "slug": "clusters",
@@ -174,6 +174,6 @@
       "Portable installation"
     ],
     "source": "https://www.clusters.to",
-    "visual": "reference-1"
+    "visual": "scene-1"
   }
 ]
